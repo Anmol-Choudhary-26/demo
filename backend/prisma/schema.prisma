@@ -1,0 +1,314 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URL")
+}
+
+enum Role {
+  null
+  INVESTOR
+  FRANCHISE
+  BUSINESS
+  IDEA
+}
+
+enum notiType {
+  GENERAL
+  IDEA
+  INVESTOR
+  BUSINESS
+  FRANCHISE
+}
+
+enum EntityType {
+  null
+  SOLE_PROPRIETORSHIP
+  PARTNERSHIP
+  LIMITED_LIABILITY_COMPANY
+  LIMITED_LIABILITY_PARTNERSHIP
+  PRIVATE_LIMITED_COMPANY
+  PUBLIC_LIMITED_COMPANY
+  C_CORPORATION
+  S_CORPORATION
+  OTHER
+}
+
+enum InvestorPreference {
+  null
+  SOLEINVESTOR
+  PARTNER
+  STAKEHOLDER
+}
+
+model User {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  phoneNumber String
+  FullName    String
+  Password    String
+  shortBio    String?
+  Address     String?
+  IDCard      String?
+  userRole    Role?    @default(null)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  block      Boolean  @default(false)
+  report     Report[]
+}
+
+model Investor {
+  id                   String                @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String                @map("user_id") @db.ObjectId
+  Businesses           Investment[]
+  Franchises           FranchiseInvestment[] // Changed to Investment
+  corporateProfile     String
+  BusinessProof        String
+  isVerified           Boolean               @default(false)
+  industry             industry[]
+  locations            location[]
+  investmentRangeStart Int
+  investmentRangeEnd   Int
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  chatRoom             chatRoom[]
+  msg                  msg[]
+}
+
+model Business {
+  id                              String             @id @default(auto()) @map("_id") @db.ObjectId
+  userId                          String             @map("user_id") @db.ObjectId
+  isVerified                      Boolean            @default(false)
+  establishedDate                 String 
+  phone                           String
+  industry                        String
+  name                            String
+  address                         String
+  numberOfEmployees               Int
+  businessLegalEntityType         EntityType
+  businessPhoneNumber             String
+  productInfo                     String
+  businessInfo                    String
+  facilityInfo                    String
+  currentLoanInfo                 String
+  totalShareHolders               String
+  currentMonthlySales             String
+  latestReportedSales             Int
+  OperatingProfitMarginPercentage Int
+  TangibleIntangibleAssests       String
+  valueOfPhysicalAssets           Int
+  InvestorPreference              InvestorPreference
+  BusinessImage                   String
+  BusinessDocument                String
+  BusinessProof                   String
+  State                           String
+  district                        String
+  Pincode                         Int
+  locations                       location[] 
+  Interests                       industry[]
+  InvestmentRangeStart            Int
+  InvestmentRangeEnd              Int
+  score                           Int @default(0)
+  investments                     Investment[] // Changed to Investment
+  createdAt                       DateTime           @default(now())
+  updatedAt                       DateTime           @updatedAt
+  chatRoom                        chatRoom[]
+  msg                             msg[]
+}
+
+model UpdateBusiness {
+  id                              String             @id @default(auto()) @map("_id") @db.ObjectId
+  userId                          String             @map("user_id") @db.ObjectId
+  industry                        String
+  name                            String
+  address                         String
+  numberOfEmployees               Int
+  businessLegalEntityType         EntityType
+  businessPhoneNumber             String
+  productInfo                     String
+  businessInfo                    String
+  facilityInfo                    String
+  currentLoanInfo                 String
+  totalShareHolders               String
+  currentMonthlySales             String
+  latestReportedSales             Int
+  OperatingProfitMarginPercentage Int
+  TangibleIntangibleAssests       String
+  valueOfPhysicalAssets           Int
+  InvestorPreference              InvestorPreference
+  InvestmentRangeStart            Int
+  InvestmentRangeEnd              Int
+  createdAt                       DateTime           @default(now())
+  updatedAt                       DateTime           @updatedAt
+}
+
+model Franchise {
+  id                              String                @id @default(auto()) @map("_id") @db.ObjectId
+  userId                          String                @map("user_id") @db.ObjectId
+  name                            String
+  isVerified                      Boolean               @default(false)
+  phone        String
+  industry                        String
+  establishedDate                 String
+  productInfo                     String
+  FranchiseInfo                   String
+  facilityInfo                    String
+  address                         String
+  currentLoanInfo                 String
+  totalShareHolders               String
+  currentFundingInfo              String
+  currentMonthlySales      Int
+  latestReportedSales             Int
+  BusinessImage                   String
+  BusinessDocument                String
+  BusinessProof                   String
+  State                           String
+  district                        String
+  Pincode                         Int
+  OperatingProfitMarginPercentage Int
+  TangibleIntangibleAssests       String
+  valueOfPhysicalAssets           Int
+  InvestorPreference              InvestorPreference
+  locations                       String[]
+  InvestmentRangeStart            Int
+  InvestmentRangeEnd              Int
+  numberOfEmployees               Int
+  FranchiseLegalEntityType        EntityType
+  investments                     FranchiseInvestment[] // Changed to Investment
+  createdAt                       DateTime              @default(now())
+  updatedAt                       DateTime              @updatedAt
+}
+
+model Idea {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @map("user_id") @db.ObjectId
+  idea       String
+  isVerified Boolean  @default(false)
+  idProof    String
+  adhaar     String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Admin {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  password    String
+  email       String
+  phoneNumber String
+  admin       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SuperAdmin {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  password    String
+  email       String
+  phoneNumber String
+  superAdmin  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Investment {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  investorId String   @map("investor_id") @db.ObjectId
+  businessId String   @map("business_id") @db.ObjectId
+  investor   Investor @relation(fields: [investorId], references: [id])
+  business   Business @relation(fields: [businessId], references: [id])
+  amount     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([investorId, businessId])
+}
+
+model FranchiseInvestment {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  investorId String    @map("investor_id") @db.ObjectId
+  businessId String    @map("business_id") @db.ObjectId
+  investor   Investor  @relation(fields: [investorId], references: [id])
+  business   Franchise @relation(fields: [businessId], references: [id])
+  amount     Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([investorId, businessId])
+}
+
+
+model industry {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  investorId  String   @map("investor_id") @db.ObjectId
+  investor    Investor @relation(fields: [investorId], references: [id])
+  businessId  String   @map("business_id") @db.ObjectId
+  business    Business @relation(fields: [businessId], references: [id])
+  score       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model location {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  locationName String
+  description  String
+  investorId   String   @map("investor_id") @db.ObjectId
+  investor     Investor @relation(fields: [investorId], references: [id])
+  businessId   String   @map("business_id") @db.ObjectId
+  business     Business @relation(fields: [businessId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model blog {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model notification {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  notiType    notiType? @default(GENERAL)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model chatRoom {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  business   Business @relation(fields: [businessId], references: [id])
+  businessId String   @db.ObjectId
+  investor   Investor @relation(fields: [investorId], references: [id])
+  investorId String   @db.ObjectId
+  message    msg[]
+}
+
+model msg {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  message    String
+  business   Business @relation(fields: [businessId], references: [id])
+  businessId String   @db.ObjectId
+  investor   Investor @relation(fields: [investorId], references: [id])
+  investorId String   @db.ObjectId
+  chatRoom   chatRoom @relation(fields: [chatRoomId], references: [id])
+  chatRoomId String   @db.ObjectId
+  time       DateTime @default(now())
+  received   Boolean  @default(false)
+}
+
+model Report {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  reason     String
+  userId     String     @db.ObjectId
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+}

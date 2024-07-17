@@ -1,0 +1,9 @@
+
+ export const enum Role {
+    ADMIN = 'ADMIN',
+    INVESTOR = 'INVESTOR',
+    BUSINESS = 'BUSINESS',
+    FRANCHISE = 'FRANCHISE',
+    IDEATION = 'IDEATION',
+    SUPERADMIN = 'SUPERADMIN'
+  }
