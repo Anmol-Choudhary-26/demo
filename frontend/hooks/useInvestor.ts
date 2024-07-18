@@ -3,7 +3,7 @@ import { getDataFromLocalStorage, setDataToLocalStorage } from "@/utils/function
 export async function createInvestor(corporateProfile: any, bankStatement: any){
     const userID = getDataFromLocalStorage('userID')
     const token = getDataFromLocalStorage('access_token0')
-    const data = await axios.post('http://127.0.0.1:8000/investor', 
+    const data = await axios.post('https://travelbuddy-backend-gxl9.onrender.com/investor', 
      {
         userId :userID,
         corporateProfile: "Corporate Profile",
@@ -25,7 +25,7 @@ export async function createInvestor(corporateProfile: any, bankStatement: any){
 export async function createInvestor2(values: any){
   const userID = getDataFromLocalStorage('userID')
   const token = getDataFromLocalStorage('access_token0')
-  const data = await axios.post('http://127.0.0.1:8000/investor', 
+  const data = await axios.post('https://travelbuddy-backend-gxl9.onrender.com/investor', 
    {
       userId :userID,
       industry : values.interest,

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getDataFromLocalStorage, setDataToLocalStorage } from "@/utils/functions";
 export async function createUser(values: any) {
-    const data = await axios.post('http://127.0.0.1:8000/user', 
+    const data = await axios.post('https://travelbuddy-backend-gxl9.onrender.com/user', 
      {
         phoneNumber :  `+91${values.phone}`,
         password : values.password,
@@ -17,7 +17,7 @@ export async function createUser(values: any) {
 export async function updateUser(values : any){
        const userID = getDataFromLocalStorage('userID')
        const token = getDataFromLocalStorage('access_token0')
-    const data = await axios.put(`http://127.0.0.1:8000/user/${userID}`, {
+    const data = await axios.put(`https://travelbuddy-backend-gxl9.onrender.com/user/${userID}`, {
          shortBio: values.shortBio, 
          IDCard : "cardURL",
          Address: values.address,
@@ -35,7 +35,7 @@ export async function updateUser(values : any){
 export async function updateuser2(role: string){
     const userID = getDataFromLocalStorage('userID')
        const token = getDataFromLocalStorage('access_token0')
-    const data = await axios.put(`http://127.0.0.1:8000/user/${userID}`, {
+    const data = await axios.put(`https://travelbuddy-backend-gxl9.onrender.com/user/${userID}`, {
         userRole: role,
     },
      {

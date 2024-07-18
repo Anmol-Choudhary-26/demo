@@ -38,7 +38,7 @@ export async function createBusiness(values: any){
       phone:"9882234285"
     }
     console.log(data1)
-    const data = await axios.post('http://127.0.0.1:8000/business', 
+    const data = await axios.post('https://travelbuddy-backend-gxl9.onrender.com/business', 
      data1,
     {
        headers: {

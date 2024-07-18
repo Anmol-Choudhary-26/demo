@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export async function SingIn(phone: any, password: any) {
     console.log(phone, password)
-    const data = await axios.post('http://127.0.0.1:8000/login', 
+    const data = await axios.post('https://travelbuddy-backend-gxl9.onrender.com/login', 
      {
         phone:`${phone}`,
         password
