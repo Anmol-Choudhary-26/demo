@@ -3,7 +3,7 @@ import { getDataFromLocalStorage, setDataToLocalStorage } from "@/utils/function
 export async function createBlog(values: any){
     const token = getDataFromLocalStorage('access_token0')
    
-    const data = await axios.post('https://travelbuddy-backend-gxl9.onrender.com/blog', 
+    const data = await axios.post('http://backend.pehlastake.com/blog', 
     values,
     {
        headers: {
@@ -14,14 +14,14 @@ export async function createBlog(values: any){
     return data
 }
 export async function getBlog() {
-  const blogs = await axios.get('https://travelbuddy-backend-gxl9.onrender.com/blog')
+  const blogs = await axios.get('http://backend.pehlastake.com/blog')
   return blogs.data
 
 }
 
 export async function searchBlog(blog: string){
   console.log(blog)
-  const blogs = await axios.get(`https://travelbuddy-backend-gxl9.onrender.com/blog/search`,
+  const blogs = await axios.get(`http://backend.pehlastake.com/blog/search`,
     {
       params: {
         search: blog,
@@ -32,7 +32,7 @@ export async function searchBlog(blog: string){
 }
 
 export async function deleteBlog(blogId: string){
-   await axios.delete(`https://travelbuddy-backend-gxl9.onrender.com/blog/delblog`,
+   await axios.delete(`http://backend.pehlastake.com/blog/delblog`,
   {
     params: {
       id: blogId,
@@ -42,7 +42,7 @@ export async function deleteBlog(blogId: string){
 }
 
 export async function updateBlog(blogId: string, values: any){
-  const data = await axios.put(`https://travelbuddy-backend-gxl9.onrender.com/blog/update`,{
+  const data = await axios.put(`http://backend.pehlastake.com/blog/update`,{
     values,
     params: {
       id: blogId,
