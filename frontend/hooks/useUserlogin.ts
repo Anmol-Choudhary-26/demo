@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getDataFromLocalStorage, setDataToLocalStorage } from "@/utils/functions";
 export async function createUser(values: any) {
-    const data = await axios.post('http://backend.pehlastake.com/user', 
+    const data = await axios.post('https://backend.pehlastake.com/user', 
      {
         phoneNumber :  `+91${values.phone}`,
         password : values.password,
@@ -17,7 +17,7 @@ export async function createUser(values: any) {
 export async function updateUser(values : any){
        const userID = getDataFromLocalStorage('userID')
        const token = getDataFromLocalStorage('access_token0')
-    const data = await axios.put(`http://backend.pehlastake.com/user/${userID}`, {
+    const data = await axios.put(`https://backend.pehlastake.com/user/${userID}`, {
          shortBio: values.shortBio, 
          IDCard : "cardURL",
          Address: values.address,
@@ -35,7 +35,7 @@ export async function updateUser(values : any){
 export async function updateuser2(role: string){
     const userID = getDataFromLocalStorage('userID')
        const token = getDataFromLocalStorage('access_token0')
-    const data = await axios.put(`http://backend.pehlastake.com/user/${userID}`, {
+    const data = await axios.put(`https://backend.pehlastake.com/user/${userID}`, {
         userRole: role,
     },
      {

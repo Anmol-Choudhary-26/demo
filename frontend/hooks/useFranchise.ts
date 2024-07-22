@@ -38,7 +38,7 @@ export async function createFranchise(values: any){
       phone:"9882234285"
     }
     console.log(data1)
-    const data = await axios.post('http://backend.pehlastake.com/franchise', 
+    const data = await axios.post('https://backend.pehlastake.com/franchise', 
      data1,
     {
        headers: {

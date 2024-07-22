@@ -38,7 +38,7 @@ export async function createBusiness(values: any){
       phone:"9882234285"
     }
     console.log(data1)
-    const data = await axios.post('http://backend.pehlastake.com/business', 
+    const data = await axios.post('https://backend.pehlastake.com/business', 
      data1,
     {
        headers: {

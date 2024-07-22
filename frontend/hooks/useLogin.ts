@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export async function SingIn(phone: any, password: any) {
     console.log(phone, password)
-    const data = await axios.post('http://backend.pehlastake.com/login', 
+    const data = await axios.post('https://backend.pehlastake.com/login', 
      {
         phone:`${phone}`,
         password
