@@ -1,2 +1,5 @@
 /backend/node_modules
 .env
+frontend/.next/
+frontend/next-env.d.ts
+frontend/node_modules/
