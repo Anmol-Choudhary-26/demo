@@ -35,7 +35,7 @@ export default function AboutUs() {
             theme === "dark" ? "text-[#B8FF22]" : "text-[#248E38]"
           }`}
         >
-          About Biwi
+          About PehlaStake
         </p>
         <div className="flex flex-col justify-center text-center gap-[24px]">
           <p
@@ -43,7 +43,8 @@ export default function AboutUs() {
               theme === "dark" ? "text-white" : "text-[#00171A]"
             }`}
           >
-            Welcome to Biwi - Where Investor <br /> & Businesses can Connect
+            Welcome to PehlaStake - Where Investor <br /> & Businesses can
+            Connect
           </p>
           <p
             className={`text-[13px] sm:text-[15px] font-light px-2 ${

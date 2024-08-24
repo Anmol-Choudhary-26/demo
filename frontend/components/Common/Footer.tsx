@@ -58,7 +58,7 @@ export function Footer() {
           <div className="">
             <Image
               src={"/PehlaStakeLight.svg"}
-              alt="Biwi Logo"
+              alt="PehlaStake Logo"
               width={150}
               height={100}
             />
@@ -153,12 +153,14 @@ export function Footer() {
           <div className="mt-8 text-gray-600 flex gap-2 mb-8">
             <p>Developed by</p>
             <span>
-              <Image
-                src="/PentadotsIcon.svg"
-                alt="Pentadots"
-                width={100}
-                height={50}
-              />
+              <a target="_blank" href="https://www.pentadots.com">
+                <Image
+                  src="/PentadotsIcon.svg"
+                  alt="Pentadots"
+                  width={100}
+                  height={50}
+                />
+              </a>
             </span>
           </div>
           <button

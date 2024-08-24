@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Investor } from "@/types";
 import { investorsData } from "@/constants";
 import Modal from "@/components/Admin/Model";
+import { getinvestor, delinvestor, updateinvestor, hideinvestor } from "@/hooks/useInvestor";
 
 const industries = [
   "Advertising",
@@ -34,14 +35,14 @@ const ManageInvestorsNormalUser = () => {
   });
 
   useEffect(() => {
+    const fn = async () => {
     if (id) {
-      const selectedInvestor = investorsData.find(
-        (b: { id: string | string[] }) => b.id === id
-      );
-      setInvestor(selectedInvestor || null);
+      const selectedBusiness = await getinvestor(id)
+      setInvestor(selectedBusiness);
     }
-  }, [id]);
-
+  }
+  fn()
+  }, []);
   const handleEditProfile = () => {
     setModal({
       show: true,
@@ -61,14 +62,11 @@ const ManageInvestorsNormalUser = () => {
 
   const handleHideAccount = () => {
     // Implement hide account functionality here
+    hideinvestor(id)
   };
 
-  const handleBanAccount = () => {
-    setModal({
-      show: true,
-      title: "Ban Account",
-      content: "The account has been banned.",
-    });
+  const handleBanAccount =async  () => {
+    await delinvestor(id)
   };
 
   const closeModal = () => {

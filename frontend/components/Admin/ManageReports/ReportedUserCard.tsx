@@ -1,16 +1,16 @@
 import { Card, CardHeader, CardBody } from "@material-tailwind/react";
 import React from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { delBusiness } from "@/hooks/useBusiness";
+import {  deletereportbusiness } from "../../../hooks/useReports";
 
 interface ReportedUserCardProps {
   user: {
     id: string;
-    name: string;
+    businessName: string;
     profileImage: string;
     reason: string;
-    reportedFor: string;
-    userType: string; // Added userType to distinguish between investors and businesses
+    reporterName: string;
   };
 }
 
@@ -18,15 +18,25 @@ const ReportedUserCard: React.FC<ReportedUserCardProps> = ({ user }) => {
   const router = useRouter();
 
   const handleVisitProfile = () => {
-    const pathname =
-      user.userType === "investor"
-        ? "/Admin/manage-report/investors-user-profile"
-        : "/Admin/manage-report/businesses-user-profile";
-
     router.push({
-      pathname,
+      pathname: "/user-profile",
       query: { id: user.id },
     });
+  };
+
+  const handleDeleteReport = async () => {
+    // Implement delete report functionality
+    await  deletereportbusiness(user.id);
+  };
+
+  const handleTextUser = () => {
+    // Implement text user functionality
+    console.log("Text user:", user.id);
+  };
+
+  const handleBlockUser = async () => {
+    // Implement block user functionality
+    await delBusiness(user.id);
   };
 
   return (
@@ -43,15 +53,15 @@ const ReportedUserCard: React.FC<ReportedUserCardProps> = ({ user }) => {
         className="mx-0 flex justify-between items-center gap-4 pt-0 pb-8 border-none rounded-none"
         placeholder={undefined}
       >
-        <Image
-          src={user.profileImage}
-          alt={user.name}
+        <img
+          src={'/avatar.svg'}
+          alt={user.businessName}
           width={50}
           height={50}
           className="rounded-full"
         />
         <p className="text-[16px] font-semibold tracking-wide text-white">
-          {user.name}
+          {user.businessName}
         </p>
       </CardHeader>
       <CardBody className="mb-6 p-0" placeholder={undefined}>
@@ -60,13 +70,33 @@ const ReportedUserCard: React.FC<ReportedUserCardProps> = ({ user }) => {
         </p>
         <div className="bg-[#103B3E] p-2 rounded-md border border-[#B8FF22] mt-2">
           <p className="text-[#cccccc]">
-            Reported for: <strong>{user.reportedFor}</strong>
+            Reported for: <strong>{user.reporterName}</strong>
           </p>
           <button
             onClick={handleVisitProfile}
             className="text-[#A4E320] underline"
           >
             Visit Profile
+          </button>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <button
+            onClick={handleDeleteReport}
+            className="bg-[#001F22] text-[#A4E320] px-4 py-2 rounded-full"
+          >
+            Delete Report
+          </button>
+          <button
+            onClick={handleTextUser}
+            className="bg-[#103B3E] text-[#A4E320] px-4 py-2 rounded-full"
+          >
+            Text User
+          </button>
+          <button
+            onClick={handleBlockUser}
+            className="bg-[#FFDCE5] text-[#EC183E] px-4 py-2 rounded-full"
+          >
+            Block User
           </button>
         </div>
       </CardBody>

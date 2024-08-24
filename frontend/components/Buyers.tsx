@@ -48,7 +48,7 @@ export default function RegisteredBusiness() {
               theme === "dark" ? "text-white" : "text-[#00171A]"
             }`}
           >
-            Investors and Business <br /> Buyers on Biwi
+            Investors and Business <br /> Buyers on PehlaStake
           </h1>
           <div className="">
             <p
@@ -58,7 +58,7 @@ export default function RegisteredBusiness() {
             >
               Get started by introducing yourself to an investor or a business
               buyer and send <br className="hidden sm:block" /> them your
-              proposal today. Members on Biwi include Individuals,{" "}
+              proposal today. Members on PehlaStake include Individuals,{" "}
               <br className="hidden sm:block" /> Corporates, Private Equity
               Firms, VC Firms, Family Offices, and Banks.
             </p>

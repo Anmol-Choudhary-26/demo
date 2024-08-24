@@ -87,6 +87,7 @@ export default function AboutBusinessForm() {
             </label>
             <input
               type="date"
+              required
               id="establishedDate"
               name="establishedDate"
               className={`w-full p-3 ${
@@ -106,6 +107,7 @@ export default function AboutBusinessForm() {
             <select
               id="industry"
               name="industry"
+              required
               className={`w-full p-3 ${
                 theme === "dark"
                   ? "bg-transparent text-white"
@@ -130,6 +132,7 @@ export default function AboutBusinessForm() {
               type="text"
               id="address"
               name="address"
+              required
               className={`w-full p-3 ${
                 theme === "dark"
                   ? "bg-transparent text-white"
@@ -148,6 +151,7 @@ export default function AboutBusinessForm() {
               type="text"
               id="state"
               name="state"
+              required
               className={`w-full p-3 ${
                 theme === "dark"
                   ? "bg-transparent text-white"
@@ -166,6 +170,7 @@ export default function AboutBusinessForm() {
               type="text"
               id="district"
               name="district"
+              required
               className={`w-full p-3 ${
                 theme === "dark"
                   ? "bg-transparent text-white"
@@ -184,6 +189,7 @@ export default function AboutBusinessForm() {
               type="number"
               id="Pincode"
               name="Pincode"
+              required
               className={`w-full p-3 ${
                 theme === "dark"
                   ? "bg-transparent text-white"
@@ -202,6 +208,7 @@ export default function AboutBusinessForm() {
               type="text"
               id="name"
               name="name"
+              required
               className={`w-full p-3 ${
                 theme === "dark"
                   ? "bg-transparent text-white"
@@ -222,6 +229,7 @@ export default function AboutBusinessForm() {
             <input
               type="number"
               id="numberOfEmployees"
+              required
               name="numberOfEmployees"
               className={`w-full p-3 ${
                 theme === "dark"
@@ -240,6 +248,7 @@ export default function AboutBusinessForm() {
             <select
               id="businessType"
               name="businessType"
+              required
               className={`w-full p-3 ${
                 theme === "dark"
                   ? "bg-transparent text-white"
@@ -270,6 +279,7 @@ export default function AboutBusinessForm() {
                 type="tel"
                 id="phoneNumber"
                 name="phoneNumber"
+                required
                 className={`w-full p-3 ${
                   theme === "dark"
                     ? "bg-transparent text-white"

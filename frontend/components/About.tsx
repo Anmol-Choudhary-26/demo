@@ -79,7 +79,7 @@ export default function About() {
                 }`}
               >
                 Send personalized messages and schedule meetings
-                <br className="hidden sm:block" /> directly through Biwi&apos;s
+                <br className="hidden sm:block" /> directly through PehlaStake
                 secure platform.
               </p>
             </div>

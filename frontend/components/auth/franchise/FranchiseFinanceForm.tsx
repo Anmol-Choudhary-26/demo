@@ -78,6 +78,7 @@ export default function FranchiseFinanceForm() {
               Current Loans/Debts
               <input
                 type="number"
+                required
                 name="currentLoans"
                 placeholder="Write in INR"
                 value={formData.currentLoans}
@@ -93,6 +94,7 @@ export default function FranchiseFinanceForm() {
               Total Number of Shareholders ( With Percentage they Own)
               <textarea
                 name="shareholders"
+                required
                 placeholder="Write a brief about your product or Services"
                 value={formData.shareholders}
                 onChange={handleChange}
@@ -107,6 +109,7 @@ export default function FranchiseFinanceForm() {
               Current Monthly Sales
               <input
                 name="monthlySales"
+                required
                 placeholder="Write it in INR"
                 value={formData.monthlySales}
                 onChange={handleChange}
@@ -122,6 +125,7 @@ export default function FranchiseFinanceForm() {
                 Latest Reported Sales
                 <input
                   name="reportedSales"
+                  required
                   placeholder="write in INR"
                   value={formData.reportedSales}
                   onChange={handleChange}
@@ -136,6 +140,7 @@ export default function FranchiseFinanceForm() {
                 Operating Profit Margin
                 <input
                   type="number"
+                  required
                   name="profitMargin"
                   placeholder="Percentage"
                   value={formData.profitMargin}
@@ -152,6 +157,7 @@ export default function FranchiseFinanceForm() {
               Tangible and Intangible Asset
               <textarea
                 name="assets"
+                required
                 placeholder="Write a brief about your product or Services"
                 value={formData.assets}
                 onChange={handleChange}
@@ -166,6 +172,7 @@ export default function FranchiseFinanceForm() {
               Value of Physical Asset
               <input
                 type="number"
+                required
                 name="physicalAssets"
                 placeholder="Write it in INR"
                 value={formData.physicalAssets}
@@ -181,6 +188,7 @@ export default function FranchiseFinanceForm() {
               Investor Preference
               <label className="inline-flex items-center">
                 <input
+                  required
                   type="radio"
                   name="investorPreference"
                   value="single"
@@ -192,6 +200,7 @@ export default function FranchiseFinanceForm() {
               </label>
               <label className="inline-flex items-center">
                 <input
+                  required
                   type="radio"
                   name="investorPreference"
                   value="multiple"

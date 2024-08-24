@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PrimaryButton from "@/components/Common/PrimaryButton";
 import { useRouter } from "next/router";
-import { updateUser } from "@/hooks/useUserlogin";
 import { useTheme } from "@/context/ThemeContext";
 
 // Define the FormData type here or import it if defined elsewhere
@@ -44,7 +43,8 @@ export default function PersonalDetailsForm() {
     e.preventDefault();
     // Process form submission here
     console.log(formData);
-    await updateUser(formData);
+    // await updateUser(formData);
+    localStorage.setItem("personalDetails", JSON.stringify(formData))
     router.push("/auth/select-role");
   };
 

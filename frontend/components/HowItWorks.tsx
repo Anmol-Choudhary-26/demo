@@ -46,7 +46,7 @@ export default function HowItWorks({ defaultTab }: HowItWorksProps) {
             theme === "dark" ? "text-[#B8FF22]" : "text-[#248E38]"
           }`}
         >
-          How Biwi Works
+          How PehlaStake Works
         </p>
         <div className="flex flex-col justify-center text-center gap-[24px]">
           <p

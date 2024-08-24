@@ -56,6 +56,7 @@ export default function InvestorDocumentForm() {
               Upload your Corporate Profile & Terms of Engagement
             </label>
             <input
+              required
               id="corporate-profile"
               type="file"
               onChange={handleFileChange(setCorporateFile)}
@@ -76,6 +77,7 @@ export default function InvestorDocumentForm() {
               Upload Your Proof of Bank Statement
             </label>
             <input
+              required
               id="bank-statement"
               type="file"
               onChange={handleFileChange(setBankStatementFile)}

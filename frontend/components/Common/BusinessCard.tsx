@@ -27,15 +27,17 @@ export function BusinessCard({ business }: BusinessCardProps) {
   };
 
   if (!business) {
-    return null;
+    // console.log("No business data provided");
+    return null; // This will ensure nothing is rendered if business data is undefined.
   }
 
   const {
     name,
     industry,
-    location,
-    investmentRequired,
-    establishmentYear,
+    State,
+    district,
+    InvestmentRangeEnd,
+    establishedDate,
     legalEntity,
   } = business;
 
@@ -83,15 +85,11 @@ export function BusinessCard({ business }: BusinessCardProps) {
           />
         )}
       </CardHeader>
-      <CardBody className="mb-6 p-0" placeholder={undefined}>
-        <p
-          className={`font-thin text-[14px] ${
-            theme === "dark" ? "text-[#cccccc]" : "text-[#666666]"
-          } text-justify`}
-        >
-          Investment opportunity in {location} requiring ₹
-          {investmentRequired.toLocaleString()}. Established in{" "}
-          {establishmentYear}.
+      <CardBody placeholder="" className="mb-6 p-0">
+        <p className="font-thin text-[14px] text-[#cccccc] text-justify">
+          Investment opportunity in {district}, {State} requiring ₹
+          {InvestmentRangeEnd}. Established in{" "}
+          {establishedDate}.
         </p>
         <div
           className={`${

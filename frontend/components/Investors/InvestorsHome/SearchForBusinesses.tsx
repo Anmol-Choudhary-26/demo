@@ -11,156 +11,20 @@ import { useTheme } from "@/context/ThemeContext";
 import { SidebarFilterSearchForBusiness } from "./SidebarFilterSearchForBusiness";
 
 const businessesData: Business[] = [
-  {
-    id: "1",
-    name: "Tech Innovations",
-    industry: "Technology",
-    location: "Kerala",
-    investmentRequired: 150000,
-    type: "Startup",
-    legalEntity: "Private Limited",
-    establishmentYear: 2015,
-  },
-  {
-    id: "2",
-    name: "Health Pioneers",
-    industry: "Healthcare",
-    location: "Karnataka",
-    investmentRequired: 250000,
-    type: "Corporate",
-    legalEntity: "Public Limited",
-    establishmentYear: 2010,
-  },
-  {
-    id: "3",
-    name: "Green Agriculture",
-    industry: "Agriculture",
-    location: "Tamil Nadu",
-    investmentRequired: 120000,
-    type: "Startup",
-    legalEntity: "Partnership",
-    establishmentYear: 2018,
-  },
-  {
-    id: "4",
-    name: "Robust Infrastructure",
-    industry: "Construction",
-    location: "Goa",
-    investmentRequired: 500000,
-    type: "Established",
-    legalEntity: "Sole Proprietorship",
-    establishmentYear: 2005,
-  },
-  {
-    id: "5",
-    name: "Media Masters",
-    industry: "Media",
-    location: "Kerala",
-    investmentRequired: 85000,
-    type: "Startup",
-    legalEntity: "Private Limited",
-    establishmentYear: 2020,
-  },
-  {
-    id: "6",
-    name: "Fashion Forward",
-    industry: "Retail",
-    location: "Karnataka",
-    investmentRequired: 200000,
-    type: "Franchise",
-    legalEntity: "LLC",
-    establishmentYear: 2013,
-  },
-  {
-    id: "7",
-    name: "Foodie Fiesta",
-    industry: "Food Services",
-    location: "Goa",
-    investmentRequired: 75000,
-    type: "New Venture",
-    legalEntity: "Partnership",
-    establishmentYear: 2019,
-  },
-  {
-    id: "8",
-    name: "Auto Innovators",
-    industry: "Automotive",
-    location: "Tamil Nadu",
-    investmentRequired: 300000,
-    type: "Corporate",
-    legalEntity: "Public Limited",
-    establishmentYear: 2012,
-  },
-  {
-    id: "9",
-    name: "Clean Energy Solutions",
-    industry: "Energy",
-    location: "Maharashtra",
-    investmentRequired: 450000,
-    type: "Established",
-    legalEntity: "Sole Proprietorship",
-    establishmentYear: 2008,
-  },
-  {
-    id: "10",
-    name: "Smart EduTech",
-    industry: "Education",
-    location: "Delhi",
-    investmentRequired: 100000,
-    type: "Startup",
-    legalEntity: "Private Limited",
-    establishmentYear: 2021,
-  },
-  {
-    id: "11",
-    name: "Digital Dynamics",
-    industry: "IT Services",
-    location: "Andhra Pradesh",
-    investmentRequired: 220000,
-    type: "Corporate",
-    legalEntity: "LLC",
-    establishmentYear: 2016,
-  },
-  {
-    id: "12",
-    name: "Home Decor Boutique",
-    industry: "Retail",
-    location: "Punjab",
-    investmentRequired: 95000,
-    type: "Franchise",
-    legalEntity: "Partnership",
-    establishmentYear: 2017,
-  },
-  {
-    id: "13",
-    name: "Organic Products",
-    industry: "Agriculture",
-    location: "Uttar Pradesh",
-    investmentRequired: 110000,
-    type: "New Venture",
-    legalEntity: "Sole Proprietorship",
-    establishmentYear: 2014,
-  },
-  {
-    id: "14",
-    name: "Fitness Gurus",
-    industry: "Health & Wellness",
-    location: "Haryana",
-    investmentRequired: 300000,
-    type: "Established",
-    legalEntity: "Private Limited",
-    establishmentYear: 2009,
-  },
-  {
-    id: "15",
-    name: "Luxury Travel Planners",
-    industry: "Travel & Tourism",
-    location: "Rajasthan",
-    investmentRequired: 400000,
-    type: "Corporate",
-    legalEntity: "Public Limited",
-    establishmentYear: 2012,
-  },
+
+  
+    {
+      id: "1",
+      name: "Sole Investor",
+      industry: "Technology",
+      State: "Kerala",
+      InvestmentRangeEnd: 150000,
+      type: "",
+      district:"kerela"
+     
+    },
+    
+  
 ];
 
 const SearchForBusinesses = () => {
@@ -176,7 +40,7 @@ const SearchForBusinesses = () => {
     maxInvestment: Number.MAX_SAFE_INTEGER,
     yearRange: { startYear: null, endYear: null },
   });
-
+  const [sortOption, setSortOption] = useState("New");
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -185,9 +49,32 @@ const SearchForBusinesses = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const filteredBusinesses = businessesData.filter((business) => {
+  const handleSortOptionChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSortOption(event.target.value);
+  };
+
+  const sortedBusinesses = [...businessesData].sort((a, b) => {
+
+    if (sortOption === "New") {
+      return a.type === "New" ? -1 : 1;
+    }
+    if (sortOption === "Old") {
+      return a.type === "Old" ? -1 : 1;
+    }
+    if (sortOption === "Investment Lowest") {
+      return a.InvestmentRangeEnd - b.InvestmentRangeEnd;
+    }
+    if (sortOption === "Investment Highest") {
+      return b.InvestmentRangeEnd - a.InvestmentRangeEnd;
+    }
+    return 0;
+  });
+
+  const filteredBusinesses = sortedBusinesses.filter((business) => {
     const matchesLocation =
-      !filters.location || business.location.includes(filters.location);
+      !filters.location || business.State.includes(filters.location);
     const matchesSector =
       !filters.sector || business.industry.includes(filters.sector);
     const matchesSearchTerms = filters.searchTerms.every((term) =>
@@ -204,10 +91,10 @@ const SearchForBusinesses = () => {
 
     const matchesMinInvestment =
       filters.minInvestment === undefined ||
-      business.investmentRequired >= filters.minInvestment;
+      business.InvestmentRangeEnd >= filters.minInvestment;
     const matchesMaxInvestment =
       filters.maxInvestment === undefined ||
-      business.investmentRequired <= filters.maxInvestment;
+      business.InvestmentRangeEnd<= filters.maxInvestment;
 
     return (
       matchesLocation &&
@@ -232,12 +119,10 @@ const SearchForBusinesses = () => {
     indexOfLastBusiness
   );
 
-  // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const toggleFilter = () => setIsFilterVisible(!isFilterVisible);
 
-  // This function is called when the Enter key is pressed or the search icon is clicked
   const addSearchTerm = (term: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -245,7 +130,6 @@ const SearchForBusinesses = () => {
     }));
   };
 
-  // Handle the search on Enter press
   const handleSearchEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && searchInput.trim()) {
       addSearchTerm(searchInput.trim());
@@ -253,7 +137,6 @@ const SearchForBusinesses = () => {
     }
   };
 
-  // Handle the search on icon click
   const handleSearchClick = () => {
     if (searchInput.trim()) {
       addSearchTerm(searchInput.trim());
@@ -261,7 +144,6 @@ const SearchForBusinesses = () => {
     }
   };
 
-  // When applying filters from FilterSearchForBusiness
   const applyFilters = (newFilters: FiltersProps) => {
     setFilters(newFilters);
     paginate(1); // Reset to page 1 when filters change
@@ -275,7 +157,6 @@ const SearchForBusinesses = () => {
         isFilterVisible ? "ml-80" : ""
       } transition-all duration-300`}
     >
-      {/* Sidebar */}
       {isFilterVisible && (
         <FilterSearchForBusiness
           isFilterVisible={isFilterVisible}
@@ -286,7 +167,6 @@ const SearchForBusinesses = () => {
         />
       )}
 
-      {/* Main Content */}
       <main className={`flex-grow ${isFilterVisible ? "" : ""}`}>
         <section className="mb-10">
           <div className="flex items-center flex-wrap mb-2">
@@ -353,26 +233,24 @@ const SearchForBusinesses = () => {
 
               <div className="flex items-center ml-8">
                 <p className="text-gray-400">Sort by</p>
-                <p className="flex items-center pl-1 font-medium">
-                  <span
-                    className={
-                      theme === "dark" ? "text-white" : "text-[#00171A]"
-                    }
-                  >
-                    New Listing
-                  </span>
-                  <ChevronDownIcon
-                    strokeWidth={2.5}
-                    className={`h-4 w-4 transition-transform ${
-                      theme === "dark" ? "text-white" : "text-[#00171A]"
-                    }`}
-                  />
-                </p>
+                <select
+                  value={sortOption}
+                  onChange={handleSortOptionChange}
+                  className={`ml-2 px-2 py-1 border rounded ${
+                    theme === "dark"
+                      ? "bg-[#18363a] border-none outline-[#B8FF22] rounded-full text-white"
+                      : "bg-white border outline-[#248E38] rounded-full text-[#00171A]"
+                  }`}
+                >
+                  <option value="New">New</option>
+                  <option value="Old">Old</option>
+                  <option value="Investment Lowest">Investment Lowest</option>
+                  <option value="Investment Highest">Investment Highest</option>
+                </select>
               </div>
             </div>
           </div>
-          {/* Card list */}
-          {/* Business Cards */}
+
           <div className="mr-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {currentBusinesses.map((business) => (
               <BusinessCard key={business.id} business={business} />

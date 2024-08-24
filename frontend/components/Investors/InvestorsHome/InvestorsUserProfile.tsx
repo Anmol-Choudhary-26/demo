@@ -23,13 +23,15 @@ const locations = ["Bangalore", "Chennai", "Cochin", "Goa"];
 
 const InvestorsUserProfile: React.FC = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const InvestorData = JSON.parse(localStorage.getItem("InvestorData") || "") 
+  const UserData = JSON.parse(localStorage.getItem("userData") || "")
   const [profileData, setProfileData] = useState<ProfileData>({
-    email: "Available only after Connect",
-    phone: "Available Only after connect",
-    bio: "With [number] years of experience navigating the dynamic landscape of media and advertising, I boast a proven track record of identifying disruptive trends, nurturing innovative ventures, and driving exceptional returns for investors. My passion for storytelling and keen understanding of consumer behavior have fueled successful investments in a diverse portfolio of top companies across the media spectrum.",
+    email: UserData.data.email,
+    phone: UserData.data.phoneNumber,
+    bio: InvestorData.data.shortBio,
     industryInterests: industries,
     locationInterests: locations,
-    investmentRange: "10L to 5 Cr",
+    investmentRange: `${InvestorData.data.investmentRangeStart}L to ${InvestorData.data.investmentRangeEnd}L`,
     recentActivity: [
       { text: "Connected with Two Businesses", details: "" },
       {
@@ -104,8 +106,9 @@ const InvestorsUserProfile: React.FC = () => {
         </div>
         <div className="flex flex-col space-y-2 ">
           <p className=" font-bold text-[24px]">
-            Investor at Media Production , Digital <br /> Marketing based on
-            Kolkata, West Bengal
+          { UserData.data.FullName} < br />
+            Investor at Media Production , Digital <br /> Marketing based in 
+           {" "} { InvestorData.data.Address}
           </p>
           <h4 className="text-md font-semibold">
             Email:

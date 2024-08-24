@@ -186,10 +186,9 @@ export default function Sidebar() {
       <Typography
         as="div"
         placeholder=""
-        className={`flex flex-row-reverse justify-between py-3 px-2 bg-${
+        className={`flex flex-row-reverse justify-between font-manrope sticky top-0 max-w-none px-4 py-2 border-none shadow-none rounded-none backdrop-blur-none bg-white dark:bg-[#00171A] bg-opacity-100 z-10 bg-${
           theme === "dark" ? "[#003034]" : "[#FFFFFF]"
         }`}
-        onClick={openDrawer}
       >
         <div className="m-auto">
           <Typography
@@ -206,11 +205,13 @@ export default function Sidebar() {
             />
           </Typography>
         </div>
-        {isDrawerOpen ? (
-          <XMarkIcon className=" p-2 h-8 w-8 stroke-2 bg-[#B8FF22] rounded-full" />
-        ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2 bg-[#B8FF22] rounded-full p-1" />
-        )}
+        <div onClick={openDrawer} className="">
+          {isDrawerOpen ? (
+            <XMarkIcon className=" p-2 h-8 w-8 stroke-2 bg-[#B8FF22] rounded-full" />
+          ) : (
+            <Bars3Icon className="h-8 w-8 stroke-2 bg-[#B8FF22] rounded-full p-1" />
+          )}
+        </div>
       </Typography>
 
       <Drawer
@@ -242,7 +243,7 @@ export default function Sidebar() {
           </div>
           <List placeholder="">{renderedItem}</List>
           <div className="flex flex-col justify-end mt-52">
-            <div className="flex flex-col py-4 gap-4">
+            <div className="flex flex-col py-4 gap-4" onClick={closeDrawer}>
               <Link href="/auth/signin">
                 <PrimaryButton
                   title="Login"

@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Progress } from "@material-tailwind/react";
 import { Business } from "@/types";
-import { businessesData } from "@/constants";
 import Modal from "@/components/Admin/Model";
+import { getBusiness, hideBusiness, delBusiness } from "@/hooks/useBusiness";
 
 interface ModalState {
   show: boolean;
@@ -25,13 +25,15 @@ const ManageBusinessNormalUser = () => {
   });
 
   useEffect(() => {
+    const fn = async () => {
     if (id) {
-      const selectedBusiness = businessesData.find(
-        (b: { id: string | string[] }) => b.id === id
-      );
-      setBusiness(selectedBusiness || null);
+      const selectedBusiness = await getBusiness(id)
+      console.log(selectedBusiness)
+      setBusiness(selectedBusiness);
     }
-  }, [id]);
+  }
+  fn()
+  }, []);
 
   const handleEditProfile = () => {
     setModal({
@@ -50,21 +52,16 @@ const ManageBusinessNormalUser = () => {
     });
   };
 
+  
   const handleHideAccount = () => {
-    setModal({
-      show: true,
-      title: "Hide Account",
-      content: "The account has been hidden.",
-    });
+    // Implement hide account functionality here
+    hideBusiness(id)
   };
 
-  const handleBanAccount = () => {
-    setModal({
-      show: true,
-      title: "Ban Account",
-      content: "The account has been banned.",
-    });
+  const handleBanAccount =async  () => {
+    await delBusiness(id)
   };
+
 
   const handleViewDocument = () => {
     setModal({
@@ -101,9 +98,9 @@ const ManageBusinessNormalUser = () => {
       <div className="bg-[#003034] border border-white rounded-xl py-4 sm:py-10 px-4 sm:px-10 m-4 col-span-2 sm:w-3/4">
         <div className="flex flex-col space-y-2 text-white">
           <p className="text-white font-bold text-[24px]">
-            {business.name} in {business.location}{" "}
+            {business.name} in {business.district}, {business.State}{" "}
             <br className="sm:block hidden" /> looking for Investment at{" "}
-            {business.location}
+            {business.district}, {business.State}
           </p>
           <div className="border border-gray-400 rounded-xl py-4 px-4 space-y-2">
             <div className="flex justify-between">
@@ -111,7 +108,7 @@ const ManageBusinessNormalUser = () => {
               <p className="text-white">
                 Required amount :{" "}
                 <span className="text-[#EAD514]">
-                  ₹{business.investmentRequired}
+                  ₹{business.InvestmentRangeEnd}
                 </span>
               </p>
             </div>
@@ -132,7 +129,7 @@ const ManageBusinessNormalUser = () => {
           <h4 className="text-md font-semibold">
             Established Year:
             <span className="text-md text-gray-400 font-thin ml-2">
-              {business.establishmentYear}
+              {business.establishedDate}
             </span>
           </h4>
           <h4 className="text-md font-semibold">
@@ -144,7 +141,7 @@ const ManageBusinessNormalUser = () => {
           <h4 className="text-md font-semibold">
             District:
             <span className="text-md text-gray-400 font-thin ml-2">
-              {business.location}
+            {business.district}, {business.State}
             </span>
           </h4>
           <h4 className="text-md font-semibold">

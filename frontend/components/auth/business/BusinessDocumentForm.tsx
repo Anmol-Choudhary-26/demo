@@ -95,6 +95,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = ({
       <span className="mb-2 block">{label}</span>
       <input
         type="file"
+        required
         onChange={onFileChange}
         className={`w-full mt-2 p-3 ${
           theme === "dark"

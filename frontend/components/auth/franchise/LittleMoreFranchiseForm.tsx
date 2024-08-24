@@ -52,6 +52,7 @@ export default function LittleMoreFranchiseForm() {
               <label htmlFor="productInfo" className="text-[16px]">
                 Your Product & Services Info
                 <textarea
+                  required
                   id="productInfo"
                   name="productInfo"
                   rows={4}
@@ -70,6 +71,7 @@ export default function LittleMoreFranchiseForm() {
               <label htmlFor="businessInfo" className="text-[16px]">
                 Write Briefly About Your Businesses
                 <textarea
+                  required
                   id="businessInfo"
                   name="businessInfo"
                   rows={4}
@@ -88,6 +90,7 @@ export default function LittleMoreFranchiseForm() {
               <label htmlFor="facilityInfo" className="text-[16px]">
                 Write About Your Facility Info
                 <textarea
+                  required
                   id="facilityInfo"
                   name="facilityInfo"
                   rows={4}

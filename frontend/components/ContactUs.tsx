@@ -37,7 +37,7 @@ export default function ContactUs() {
             theme === "dark" ? "text-[#B8FF22]" : "text-[#248E38]"
           }`}
         >
-          About Biwi
+          About PehlaStake
         </p>
         <div className="flex flex-col justify-center text-center gap-[24px]">
           <p className="text-6xl font-bold">We would like to hear from You</p>

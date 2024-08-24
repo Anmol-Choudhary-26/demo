@@ -1,9 +1,22 @@
 import { Button } from "@material-tailwind/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import React, { KeyboardEvent } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useRouter } from "next/router";
 
-export default function InvestorsHero() {
+export default function InvestorsHero(): JSX.Element {
   const { theme } = useTheme();
+  const router = useRouter();
+
+  const handleSearch = (): void => {
+    router.push("/auth/signup");
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <section className="pt-4">
@@ -42,15 +55,15 @@ export default function InvestorsHero() {
                 className={`p-2 text-sm bg-transparent focus:bg-transparent w-[20rem] h-10 rounded-full outline-none ${
                   theme === "dark" ? "text-white" : "text-[#00171A]"
                 }`}
+                onKeyDown={handleKeyDown}
               />
             </div>
-            <Button
-              placeholder=""
-              size="sm"
-              className="right-1 top-1 rounded-full bg-[#248E38] dark:bg-[#B8FF22]"
+            <button
+              onClick={handleSearch}
+              className="px-4 rounded-full bg-[#248E38] dark:bg-[#B8FF22]"
             >
               <MagnifyingGlassIcon className="p-0 h-4 w-4" />
-            </Button>
+            </button>
           </div>
         </div>
       </div>

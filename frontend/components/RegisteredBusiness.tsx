@@ -48,7 +48,7 @@ export default function RegisteredBusiness() {
               theme === "dark" ? "text-white" : "text-[#00171A]"
             }`}
           >
-            1000+ registered <br /> businesses for sale on Biwi
+            1000+ registered <br /> businesses for sale on PehlaStake
           </p>
           <div className="">
             <p

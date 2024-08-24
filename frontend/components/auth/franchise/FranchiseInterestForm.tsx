@@ -57,6 +57,7 @@ export default function FranchiseInterestForm() {
                 Select Industries that You have Interest
               </p>
               <select
+                required
                 value={industry}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   setIndustry(e.target.value)
@@ -77,6 +78,7 @@ export default function FranchiseInterestForm() {
               Enter Locations you are interested
             </p>
             <select
+              required
               value={location}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                 setLocation(e.target.value)
@@ -98,6 +100,7 @@ export default function FranchiseInterestForm() {
                 Min. Investment:
               </label>
               <input
+                required
                 type="range"
                 min="0"
                 max="100000"
@@ -118,6 +121,7 @@ export default function FranchiseInterestForm() {
                 Max. Investment:
               </label>
               <input
+                required
                 type="range"
                 min="200000"
                 max="10000000"

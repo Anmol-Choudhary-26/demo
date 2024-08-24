@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import pehlaStakeLight from "@/public/PehlaStakeLight.svg";
+import pehlaStakeDark from "@/public/PehlaStakeDark.svg";
 import {
   Typography,
   Drawer,
@@ -113,32 +114,33 @@ export default function AdminSidebar() {
     <>
       <Typography
         as="div"
-        className={`flex flex-row-reverse justify-between py-3 px-2 bg-${
-          theme === "dark" ? "text-[#003034]" : "text-[#FFFFFF]"
+        placeholder=""
+        className={`flex flex-row-reverse justify-between font-manrope sticky top-0 max-w-none px-4 py-2 border-none shadow-none rounded-none backdrop-blur-none bg-white dark:bg-[#00171A] bg-opacity-100 z-10 bg-${
+          theme === "dark" ? "[#003034]" : "[#FFFFFF]"
         }`}
-        onClick={openDrawer}
-        placeholder={undefined}
       >
         <div className="m-auto">
           <Typography
             as="a"
-            href="/Admin/homepage"
+            href="/"
             className="mr-4 cursor-pointer py-1.5 lg:ml-2"
             placeholder={undefined}
           >
             <Image
-              src={pehlaStakeLight}
+              src={theme === "dark" ? pehlaStakeLight : pehlaStakeDark}
               alt="PehlaStake"
               width={150}
               height={50}
             />
           </Typography>
         </div>
-        {isDrawerOpen ? (
-          <XMarkIcon className=" p-2 h-8 w-8 stroke-2 bg-[#B8FF22] rounded-full" />
-        ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2 bg-[#B8FF22] rounded-full p-1" />
-        )}
+        <div onClick={openDrawer} className="">
+          {isDrawerOpen ? (
+            <XMarkIcon className=" p-2 h-8 w-8 stroke-2 bg-[#B8FF22] rounded-full" />
+          ) : (
+            <Bars3Icon className="h-8 w-8 stroke-2 bg-[#B8FF22] rounded-full p-1" />
+          )}
+        </div>
       </Typography>
 
       <Drawer

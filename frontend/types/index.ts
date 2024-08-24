@@ -57,11 +57,12 @@ export interface Business {
   id: string;
   name: string;
   industry: string;
-  location: string;
-  investmentRequired: number;
+  district: string;
+  State: string;
+  InvestmentRangeEnd: number;
   type?: string; // assuming `type` should be a string describing the business type
   legalEntity?: string; // make optional if not all businesses will have this defined
-  establishmentYear?: number;
+  establishedDate?: string;
 }
 
 // types.ts
@@ -91,9 +92,8 @@ export interface BlogPost {
   id: string;
   title: string;
   description: string;
-  date: string;
+  createdAt: string;
 }
-
 export interface BlogContextType {
   blogs: BlogPost[];
   addBlog: (blog: BlogPost) => void;

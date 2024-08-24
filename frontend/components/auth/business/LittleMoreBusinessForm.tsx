@@ -53,6 +53,7 @@ export default function LittleMoreBusinessForm() {
                 Your Product & Services Info
                 <textarea
                   id="productInfo"
+                  required
                   name="productInfo"
                   rows={4}
                   className={`w-full p-3 rounded-md border outline-none text-[14px] mt-2 placeholder-gray-800 ${
@@ -71,6 +72,7 @@ export default function LittleMoreBusinessForm() {
                 Write Briefly About Your Businesses
                 <textarea
                   id="businessInfo"
+                  required
                   name="businessInfo"
                   rows={4}
                   className={`w-full p-3 rounded-md border outline-none text-[14px] mt-2 placeholder-gray-800 ${
@@ -89,6 +91,7 @@ export default function LittleMoreBusinessForm() {
                 Write About Your Facility Info
                 <textarea
                   id="facilityInfo"
+                  required
                   name="facilityInfo"
                   rows={4}
                   className={`w-full p-3 rounded-md border outline-none text-[14px] mt-2 placeholder-gray-800 ${

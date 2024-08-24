@@ -28,13 +28,12 @@ export default function SignUpForm() {
 
     // Store the phone number in the session storage and fetch that phoneNumber in OTPForm
     sessionStorage.setItem("phoneNumber", formData.phone);
+    localStorage.setItem("email", formData.email)
 
     // Process form submission here
-    const data = await SignUp(formData);
+    const data = await SignUp(formData)
     console.log(data);
-    const userData = await createUser(formData);
-    console.log(userData);
-    router.push("/auth/otp");
+    router.push("/auth/signin");
   };
 
   return (

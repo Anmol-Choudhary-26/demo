@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { verifyphone, resendOTP } from "@/hooks/useVerifyOtp";
 import { useTheme } from "@/context/ThemeContext";
 
 // TypeScript type for the OTP array state
@@ -27,10 +26,10 @@ const OTPForm: React.FC = () => {
   const verifyOtp = async (otp: string): Promise<boolean> => {
     const phone = sessionStorage.getItem("phoneNumber");
     console.log("Verifying OTP:", phone, otp);
-    const data = await verifyphone(phone, otp);
-    console.log(data);
-    if (data.status === 200) return true;
-    return false;
+    // const data = await verifyphone(phone, otp);
+    // console.log(data);
+    // if (data.status === 200) return true;
+    return true;
   };
 
   const handleChange = (
@@ -53,17 +52,15 @@ const OTPForm: React.FC = () => {
     const isOtpValid = await verifyOtp(otpValue);
     console.log(isOtpValid);
     if (isOtpValid) {
-      router.replace("/auth/signin")
+      router.replace("/auth/signin");
     } else {
       console.log("The Entered OTP is not valid");
     }
     console.log("Submitted OTP is:", otpValue);
   };
 
-  const handleResendClick = async () => {
+  const handleResendClick = () => {
     console.log("Resend OTP");
-    const phone = sessionStorage.getItem("phoneNumber");
-    await resendOTP(phone)
     // TODO: Implement the logic to resend OTP to the user
   };
 

@@ -10,105 +10,18 @@ import Pagination from "@/components/Common/Pagination";
 import { useTheme } from "@/context/ThemeContext";
 import SidebarFilterSearchForInvestors from "./SidebarFilterSearchForInvestors";
 
-const businessesData: Business[] = [
+const InvestorsData: Business[] = [
   {
     id: "1",
-    name: "Sole investor",
+    name: "Sole Investor",
     industry: "Technology",
-    location: "Kerala",
-    investmentRequired: 150000,
+    State: "Kerala",
+    InvestmentRangeEnd: 150000,
+    type: "",
+    district:"kerela"
+   
   },
-  {
-    id: "2",
-    name: "Health Pioneers",
-    industry: "Healthcare",
-    location: "Karnataka",
-    investmentRequired: 250000,
-  },
-  {
-    id: "3",
-    name: "Green Agriculture",
-    industry: "Agriculture",
-    location: "TamilNadu",
-    investmentRequired: 100000,
-  },
-  {
-    id: "4",
-    name: "Robust Infrastructure",
-    industry: "Construction",
-    location: "Goa",
-    investmentRequired: 500000,
-  },
-  {
-    id: "5",
-    name: "Media Masters",
-    industry: "Media",
-    location: "Kerala",
-    investmentRequired: 75000,
-  },
-  {
-    id: "6",
-    name: "Fashion Forward",
-    industry: "Retail",
-    location: "Karnataka",
-    investmentRequired: 200000,
-  },
-  {
-    id: "7",
-    name: "Foodie Fiesta",
-    industry: "Food Services",
-    location: "Goa",
-    investmentRequired: 50000,
-  },
-  {
-    id: "8",
-    name: "Auto Innovators",
-    industry: "Automotive",
-    location: "TamilNadu",
-    investmentRequired: 300000,
-  },
-  {
-    id: "9",
-    name: "Auto Innovators",
-    industry: "Automotive",
-    location: "TamilNadu",
-    investmentRequired: 300000,
-  },
-  {
-    id: "10",
-    name: "Auto Innovators",
-    industry: "Automotive",
-    location: "TamilNadu",
-    investmentRequired: 300000,
-  },
-  {
-    id: "11",
-    name: "Auto Innovators",
-    industry: "Automotive",
-    location: "TamilNadu",
-    investmentRequired: 300000,
-  },
-  {
-    id: "12",
-    name: "Auto Innovators",
-    industry: "Automotive",
-    location: "TamilNadu",
-    investmentRequired: 300000,
-  },
-  {
-    id: "13",
-    name: "Auto Innovators",
-    industry: "Automotive",
-    location: "TamilNadu",
-    investmentRequired: 300000,
-  },
-  {
-    id: "14",
-    name: "Auto Innovators",
-    industry: "Automotive",
-    location: "TamilNadu",
-    investmentRequired: 300000,
-  },
+  
 ];
 
 const SearchForInvestors = () => {
@@ -123,6 +36,7 @@ const SearchForInvestors = () => {
     maxInvestment: Infinity,
     yearRange: { startYear: null, endYear: null },
   });
+  const [sortOption, setSortOption] = useState("New");
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -132,9 +46,15 @@ const SearchForInvestors = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const filteredBusinesses = businessesData.filter((business) => {
+  const handleSortOptionChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSortOption(event.target.value);
+  };
+
+  const filteredBusinesses = InvestorsData.filter((business) => {
     const matchesLocation =
-      !filters.location || business.location.includes(filters.location);
+      !filters.location || business.State.includes(filters.location);
     const matchesSector =
       !filters.sector || business.industry.includes(filters.sector);
     const matchesSearchTerms = filters.searchTerms.every((term) =>
@@ -143,24 +63,38 @@ const SearchForInvestors = () => {
     return matchesLocation && matchesSector && matchesSearchTerms;
   });
 
+  const sortedBusinesses = filteredBusinesses.sort((a, b) => {
+    if (sortOption === "New") {
+      return a.type === "New" ? -1 : 1;
+    }
+    if (sortOption === "Old") {
+      return a.type === "Old" ? -1 : 1;
+    }
+    if (sortOption === "Investment Lowest") {
+      return a.InvestmentRangeEnd - b.InvestmentRangeEnd;
+    }
+    if (sortOption === "Investment Highest") {
+      return b.InvestmentRangeEnd - a.InvestmentRangeEnd;
+    }
+    return 0;
+  });
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
-  const totalCardsCount = filteredBusinesses.length;
+  const totalCardsCount = sortedBusinesses.length;
   const pageCount = Math.ceil(totalCardsCount / itemsPerPage);
 
   const indexOfLastBusiness = currentPage * itemsPerPage;
   const indexOfFirstBusiness = indexOfLastBusiness - itemsPerPage;
-  const currentBusinesses = filteredBusinesses.slice(
+  const currentBusinesses = sortedBusinesses.slice(
     indexOfFirstBusiness,
     indexOfLastBusiness
   );
 
-  // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const toggleFilter = () => setIsFilterVisible(!isFilterVisible);
 
-  // This function is called when the Enter key is pressed or the search icon is clicked
   const addSearchTerm = (term: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -168,7 +102,6 @@ const SearchForInvestors = () => {
     }));
   };
 
-  // Handle the search on Enter press
   const handleSearchEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && searchInput.trim()) {
       addSearchTerm(searchInput.trim());
@@ -176,19 +109,12 @@ const SearchForInvestors = () => {
     }
   };
 
-  // Handle the search on icon click
   const handleSearchClick = () => {
     if (searchInput.trim()) {
       addSearchTerm(searchInput.trim());
       setSearchInput(""); // Clear the input after search
     }
   };
-
-  // Render page numbers
-  const pageNumbers = [];
-  for (let i = 1; i <= pageCount; i++) {
-    pageNumbers.push(i);
-  }
 
   const { theme } = useTheme();
 
@@ -280,17 +206,20 @@ const SearchForInvestors = () => {
                 >
                   Sort by
                 </p>
-                <p
-                  className={`flex items-center pl-1 font-medium ${
-                    theme === "dark" ? "text-white" : "text-black"
+                <select
+                  value={sortOption}
+                  onChange={handleSortOptionChange}
+                  className={`ml-2 px-2 py-1 border rounded ${
+                    theme === "dark"
+                      ? "bg-[#18363a] border-none outline-[#B8FF22] rounded-full text-white"
+                      : "bg-white border outline-[#248E38] rounded-full text-[#00171A]"
                   }`}
                 >
-                  New Listing
-                  <ChevronDownIcon
-                    strokeWidth={2.5}
-                    className={`h-4 w-4 transition-transform`}
-                  />
-                </p>
+                  <option value="New">New</option>
+                  <option value="Old">Old</option>
+                  <option value="Investment Lowest">Investment Lowest</option>
+                  <option value="Investment Highest">Investment Highest</option>
+                </select>
               </div>
             </div>
           </div>

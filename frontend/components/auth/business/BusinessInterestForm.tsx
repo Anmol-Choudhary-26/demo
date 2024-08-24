@@ -68,6 +68,7 @@ export default function BusinessInterestForm() {
 
               <select
                 value={industry}
+                required
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   setIndustry(e.target.value)
                 }
@@ -90,6 +91,7 @@ export default function BusinessInterestForm() {
 
             <select
               value={location}
+              required
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                 setLocation(e.target.value)
               }
@@ -114,6 +116,7 @@ export default function BusinessInterestForm() {
               <input
                 type="range"
                 min="0"
+                required
                 max="100000"
                 value={minInvestment}
                 step="10000"
@@ -137,6 +140,7 @@ export default function BusinessInterestForm() {
                 type="range"
                 min="200000"
                 max="10000000"
+                required
                 value={maxInvestment}
                 step="10000"
                 onChange={handleMaxChange}

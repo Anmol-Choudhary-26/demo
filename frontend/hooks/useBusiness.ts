@@ -45,7 +45,66 @@ export async function createBusiness(values: any){
          'Authorization': `Bearer=${token}`,
          'Content-Type': 'application/json',
        }})
-    console.log(data)
     setDataToLocalStorage("InvestorData" , JSON.stringify(data))
     return data
 }
+
+
+export async function verifiedBusiness() {
+  const data = await axios.get('https://backend.pehlastake.com/business/nonverified')
+  
+  return data.data
+}
+
+export async function getBusiness(id:any){
+  console.log(id)
+  const data = await axios.get('https://backend.pehlastake.com/business/one',
+   { params: {
+      id: id,
+    },
+  }
+  )
+  console.log(data.data)
+  return data.data  
+}
+
+export async function delBusiness(id:any){
+  const data = await axios.put('https://backend.pehlastake.com/business',{
+    isBanned: true,
+  
+  },
+  { params: {
+    id: id,
+  }})
+
+  return data.data
+}
+
+export async function updateBusiness(id:any){
+  const data = await axios.put('https://backend.pehlastake.com/business',{
+    isVerified: true,
+  
+  },
+  { params: {
+    id: id,
+  }})
+
+  return data.data
+}
+
+export async function hideBusiness(id:any){
+  const data = await axios.put('https://backend.pehlastake.com/business',{
+    isVerified: false,
+  },
+  { params: {
+    id: id,
+  }})
+
+  return data.data
+}
+
+export async function getAllBusiness(){
+  const data = await axios.get('https://backend.pehlastake.com/business')
+  return data.data
+}
+

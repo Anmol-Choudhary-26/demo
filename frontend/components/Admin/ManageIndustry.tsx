@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { searchindustry, updateindustry, deleteindustry } from "@/hooks/useIndustry";
 type ViewType = "add" | "delete" | "edit" | "";
 
 export default function ManageIndustry() {
@@ -16,19 +16,55 @@ export default function ManageIndustry() {
       : "role_button";
   };
 
-  const handleSearchDelete = () => {
-    if (searchQueryDelete.trim() !== "") {
-      setIndustriesForDelete([...industriesForDelete, searchQueryDelete]);
-      setSearchQueryDelete("");
+  // const handleSearchDelete = () => {
+  //   if (searchQueryDelete.trim() !== "") {
+  //     setIndustriesForDelete([...industriesForDelete, searchQueryDelete]);
+  //     setSearchQueryDelete("");
+  //   }
+  // };
+
+  // const handleSearchEdit = () => {
+  //   if (searchQueryEdit.trim() !== "") {
+  //     setIndustriesForEdit([...industriesForEdit, searchQueryEdit]);
+  //     setEditMode({ ...editMode, [searchQueryEdit]: false });
+  //     setSearchQueryEdit("");
+  //   }
+  // };
+
+  // const handleDelete = (industry: string) => {
+  //   // Logic to delete the industry
+  //   console.log(Deleting ${industry});
+  //   // Remove the industry from the list after deletion
+  //   setIndustriesForDelete(
+  //     industriesForDelete.filter((item) => item !== industry)
+  //   );
+  // };
+  
+  const handleSearchDelete = async () => {
+    // Set the current industry to searchQueryDelete to simulate finding that industry
+
+    try {
+      const response = await searchindustry(searchQueryDelete);
+      console.log(response);
+      setIndustriesForDelete(response)
+      
+    } catch (error) {
+      console.error("Error fetching slots:", error);
     }
+    setSearchQueryDelete("");
   };
 
-  const handleSearchEdit = () => {
-    if (searchQueryEdit.trim() !== "") {
-      setIndustriesForEdit([...industriesForEdit, searchQueryEdit]);
-      setEditMode({ ...editMode, [searchQueryEdit]: false });
-      setSearchQueryEdit("");
+  const handleSearchEdit = async () => {
+    // Set the current industry to searchQueryEdit to simulate finding that industry
+    try {
+      const response = await searchindustry(searchQueryDelete);
+      console.log(response);
+      setIndustriesForEdit(response);
+      
+    } catch (error) {
+      console.error("Error fetching slots:", error);
     }
+    setSearchQueryEdit("");
   };
 
   const handleDelete = (industry: string) => {
@@ -49,7 +85,6 @@ export default function ManageIndustry() {
 
   const handleSaveEdit = (index: number, newIndustry: string) => {
     // Logic to save the edited industry
-    console.log(`Saving ${industriesForEdit[index]} as ${newIndustry}`);
     const newIndustriesForEdit = [...industriesForEdit];
     newIndustriesForEdit[index] = newIndustry;
     setIndustriesForEdit(newIndustriesForEdit);

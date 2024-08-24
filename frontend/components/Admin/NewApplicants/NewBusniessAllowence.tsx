@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Progress } from "@material-tailwind/react";
 import { Business } from "@/types";
-import { businessesData } from "@/constants";
+import {getBusiness, delBusiness, updateBusiness} from '../../../hooks/useBusiness';
 import Modal from "@/components/Admin/Model";
 
 interface ModalState {
@@ -22,15 +22,17 @@ const NewBusinessAllowence = () => {
     title: "",
     content: "",
   });
-
+ 
   useEffect(() => {
+    const fn = async () => {
     if (id) {
-      const selectedBusiness = businessesData.find(
-        (b: { id: string | string[] }) => b.id === id
-      );
-      setBusiness(selectedBusiness || null);
+      const selectedBusiness = await getBusiness(id)
+      console.log(selectedBusiness)
+      setBusiness(selectedBusiness);
     }
-  }, [id]);
+  }
+  fn()
+  }, []);
 
   const handleViewDocument = () => {
     setModal({
@@ -43,19 +45,11 @@ const NewBusinessAllowence = () => {
   };
 
   const handleApprove = () => {
-    setModal({
-      show: true,
-      title: "Approve",
-      content: "The business has been approved.",
-    });
+  updateBusiness(id)
   };
 
   const handleBanAccount = () => {
-    setModal({
-      show: true,
-      title: "Ban Account",
-      content: "The account has been banned.",
-    });
+     delBusiness(id);
   };
 
   const handleSuggestChanges = () => {
@@ -70,7 +64,7 @@ const NewBusinessAllowence = () => {
   const closeModal = () => {
     setModal({ show: false, title: "", content: "" });
   };
-
+  console.log("business", business)
   if (!business) {
     return <div>Loading...</div>;
   }
@@ -80,9 +74,9 @@ const NewBusinessAllowence = () => {
       <div className="bg-[#003034] border border-[#EAD514] rounded-xl py-4 sm:py-10 px-4 sm:px-10 m-4 col-span-2 sm:w-3/4">
         <div className="flex flex-col space-y-2 text-white">
           <p className="text-[#EAD514] text-[24px]">
-            {business.name} in {business.location}{" "}
+            {business.name} in {business.district}, {business.State}{" "}
             <br className="sm:block hidden" /> looking for Investment at{" "}
-            {business.location}
+            {business.district}, {business.State}
           </p>
           <div className="border border-gray-400 rounded-xl py-4 px-4 space-y-2">
             <div className="flex justify-between">
@@ -90,7 +84,7 @@ const NewBusinessAllowence = () => {
               <p className="text-white">
                 Required amount :{" "}
                 <span className="text-[#EAD514]">
-                  ₹{business.investmentRequired}
+                  ₹{business.InvestmentRangeEnd}
                 </span>
               </p>
             </div>
@@ -111,7 +105,7 @@ const NewBusinessAllowence = () => {
           <h4 className="text-md font-semibold">
             Established Year:
             <span className="text-md text-gray-400 font-thin ml-2">
-              {business.establishmentYear}
+              {business.establishedDate}
             </span>
           </h4>
           <h4 className="text-md font-semibold">
@@ -123,7 +117,7 @@ const NewBusinessAllowence = () => {
           <h4 className="text-md font-semibold">
             District:
             <span className="text-md text-gray-400 font-thin ml-2">
-              {business.location}
+            {business.district}, {business.State}z
             </span>
           </h4>
           <h4 className="text-md font-semibold">

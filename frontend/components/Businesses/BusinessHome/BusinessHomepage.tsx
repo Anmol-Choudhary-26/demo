@@ -1,17 +1,28 @@
-import React from "react";
-import { Button } from "@material-tailwind/react";
+import React, { KeyboardEvent } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import SecondaryButton from "@/components/Common/SecondaryButton";
 import { PremiumCard } from "@/components/Common/PremiumCard";
 import { BusinessCard } from "@/components/Common/BusinessCard";
 import { businessesData } from "@/constants";
 import { useTheme } from "@/context/ThemeContext"; // Import the ThemeContext
+import { useRouter } from "next/router";
 
 const BusinessHomepage = () => {
   const { theme } = useTheme(); // Use theme from context
+  const router = useRouter();
 
   const selectedBusiness = businessesData.slice(0, 2);
   const selectedBusinessTech = businessesData.slice(3, 5);
+
+  const handleSearch = (): void => {
+    router.push("/Businesses/search-for-investors");
+  };
+
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <section
@@ -58,15 +69,15 @@ const BusinessHomepage = () => {
                 className={`p-2 text-sm bg-transparent focus:bg-transparent w-[20rem] h-10 rounded-full outline-none ${
                   theme === "dark" ? "text-white" : "text-[#00171A]"
                 }`}
+                onKeyDown={handleKeyPress}
               />
             </div>
-            <Button
-              placeholder=""
-              size="sm"
-              className="right-1 top-1 rounded-full bg-[#248E38] dark:bg-[#B8FF22]"
+            <button
+              onClick={handleSearch}
+              className="px-4 rounded-full bg-[#248E38] dark:bg-[#B8FF22]"
             >
               <MagnifyingGlassIcon className="p-0 h-4 w-4" />
-            </Button>
+            </button>
           </div>
         </div>
       </div>

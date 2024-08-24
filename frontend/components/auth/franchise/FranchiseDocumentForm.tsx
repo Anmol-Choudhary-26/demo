@@ -95,6 +95,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = ({
     <label className="block mt-4">
       <span className="mb-2 block">{label}</span>
       <input
+        required
         type="file"
         onChange={onFileChange}
         className={`w-full mt-2 p-3 ${

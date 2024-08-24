@@ -40,9 +40,9 @@ export function ManageFranchiseCard({ business }: BusinessCardProps) {
       </CardHeader>
       <CardBody className="mb-6 p-0" placeholder={undefined}>
         <p className="font-thin text-[14px] text-[#cccccc] text-justify">
-          Investment opportunity in {business.location} requiring ₹
-          {business.investmentRequired.toLocaleString()}. Established in{" "}
-          {business.establishmentYear}.
+          Investment opportunity in {business.district},{" "}{business.State} requiring ₹
+          {business.InvestmentRangeEnd}. Established in{" "}
+          {business.establishedDate}.
         </p>
         <div className="bg-[#103B3E] p-2 rounded-md border border-[#B8FF22] mt-2">
           <div className="flex justify-between">

@@ -56,8 +56,8 @@ export function FilterSearchForBusiness({
   applyFilters,
 }: FilterProps) {
   const { theme } = useTheme(); // use the theme hook
-  const [businessLookingFor, setBusinessLookingFor] = useState<string[]>([]);
-  const [legalEntity, setLegalEntity] = useState<string[]>([]);
+  // const [businessLookingFor, setBusinessLookingFor] = useState<string[]>([]);
+  // const [legalEntity, setLegalEntity] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedSectors, setSelectedSectors] = useState<string[]>([]);
   const [yearRange, setYearRange] = useState<YearRange>({

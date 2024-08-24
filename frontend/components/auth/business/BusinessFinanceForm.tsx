@@ -77,6 +77,7 @@ export default function BusinessFinanceForm() {
               Current Loans/Debts
               <input
                 type="number"
+                required
                 name="currentLoans"
                 placeholder="Write in INR"
                 value={formData.currentLoans}
@@ -92,6 +93,7 @@ export default function BusinessFinanceForm() {
               Total Number of Shareholders ( With Percentage they Own)
               <textarea
                 name="shareholders"
+                required
                 placeholder="Write a brief about your product or Services"
                 value={formData.shareholders}
                 onChange={handleChange}
@@ -106,6 +108,7 @@ export default function BusinessFinanceForm() {
               Current Monthly Sales
               <input
                 type="text"
+                required
                 name="monthlySales"
                 placeholder="Write it in INR"
                 value={formData.monthlySales}
@@ -123,6 +126,7 @@ export default function BusinessFinanceForm() {
                 <input
                   type="number"
                   name="reportedSales"
+                  required
                   placeholder="Write in INR"
                   value={formData.reportedSales}
                   onChange={handleChangeInt}
@@ -138,6 +142,7 @@ export default function BusinessFinanceForm() {
                 <input
                   type="number"
                   name="profitMargin"
+                  required
                   placeholder="Percentage"
                   value={formData.profitMargin}
                   onChange={handleChangeInt}
@@ -154,6 +159,7 @@ export default function BusinessFinanceForm() {
               <textarea
                 name="assets"
                 placeholder="Write a brief about your product or Services"
+                required
                 value={formData.assets}
                 onChange={handleChange}
                 className={`w-full p-3 rounded-md border outline-none text-[14px] mt-2 ${
@@ -167,6 +173,7 @@ export default function BusinessFinanceForm() {
               Value of Physical Asset
               <input
                 type="number"
+                required
                 name="physicalAssets"
                 placeholder="Write it in INR"
                 value={formData.physicalAssets}
@@ -183,6 +190,7 @@ export default function BusinessFinanceForm() {
               <label className="inline-flex items-center">
                 <input
                   type="radio"
+                  required
                   name="investorPreference"
                   value="single"
                   checked={formData.investorPreference === "single"}
@@ -194,6 +202,7 @@ export default function BusinessFinanceForm() {
               <label className="inline-flex items-center">
                 <input
                   type="radio"
+                  required
                   name="investorPreference"
                   value="multiple"
                   checked={formData.investorPreference === "multiple"}

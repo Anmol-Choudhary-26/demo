@@ -1,81 +1,28 @@
+import { createAnnouncement, deleteNotification, searchBlog, updateNotification } from "@/hooks/useAnnuncement";
+import { updateBlog } from "@/hooks/useBlog"
 import { BlogPost } from "@/types";
 import { useState, ChangeEvent } from "react";
+
 
 type ViewType = "add" | "delete" | "edit" | "";
 
 interface Blog {
+  id: string;
   title: string;
   description: string;
-  date: string;
+  notiType: string;
+  createdAt: string;
+
 }
 
 const initialBlogs: Blog[] = [
-  {
-    title: "The Rise of JavaScript Frameworks",
-    description:
-      "JavaScript frameworks have taken the development world by storm. In this article, we explore the top frameworks and their use cases.",
-    date: "2024-01-15",
-  },
-  {
-    title: "The Rise of JavaScript",
-    description:
-      "JavaScript frameworks have taken the development world by storm. In this article, we explore the top frameworks and their use cases.",
-    date: "2024-01-15",
-  },
-  {
-    title: " the rise Understanding Async/Await in JavaScript",
-    description:
-      "Async/Await simplifies working with asynchronous code in JavaScript. This post explains how to use it effectively.",
-    date: "2024-02-05",
-  },
-  {
-    title: "A Beginner's Guide to React",
-    description:
-      "React is a popular library for building user interfaces. This guide covers the basics you need to get started.",
-    date: "2024-02-20",
-  },
-  {
-    title: "CSS Grid vs. Flexbox: When to Use Which",
-    description:
-      "CSS Grid and Flexbox are powerful layout systems. Learn the differences and when to use each in your projects.",
-    date: "2024-03-10",
-  },
-  {
-    title: "Tips for Writing Clean Code",
-    description:
-      "Clean code is crucial for maintainability. Here are some tips to help you write cleaner, more readable code.",
-    date: "2024-03-25",
-  },
-  {
-    title: "Exploring New Features in ES2024",
-    description:
-      "ECMAScript 2024 introduces several new features. This post highlights the most exciting additions.",
-    date: "2024-04-10",
-  },
-  {
-    title: "Introduction to TypeScript",
-    description:
-      "TypeScript adds static typing to JavaScript. Learn how it can help you catch errors early and improve your codebase.",
-    date: "2024-04-25",
-  },
-  {
-    title: "Building a REST API with Node.js",
-    description:
-      "Node.js is perfect for building REST APIs. This tutorial walks you through the process step by step.",
-    date: "2024-05-05",
-  },
-  {
-    title: "The Benefits of Server-Side Rendering",
-    description:
-      "Server-side rendering can improve performance and SEO. Discover the benefits and how to implement it.",
-    date: "2024-05-20",
-  },
-  {
-    title: "Getting Started with GraphQL",
-    description:
-      "GraphQL is a query language for your API. This post covers the basics and helps you get started.",
-    date: "2024-06-01",
-  },
+ {
+  id:"1",
+  title: "The rise of Hilter",
+  description: "Hilter is a JavaScript framework for building user interfaces.",
+  notiType: "Investor",
+ createdAt: "2015-08-08"
+ }
 ];
 
 export default function AllAnnouncements() {
@@ -100,10 +47,16 @@ export default function AllAnnouncements() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [title, setTitle] = useState<string>("");
   const [description, setdescription] = useState<string>("");
-  const [date, setDate] = useState<string>("");
+  const [createdAt, setcreatedAt] = useState<string>("");
 
-  const handleArrowClick = (blog: BlogPost) => {
-    console.log("Current blog set:", blog); // Debugging log
+  const handleArrowClick = async (blog: BlogPost) => {
+    const values = {
+      title: blog.title,
+      description: blog.description,
+      notiType: "GENERAL",
+
+    }
+    const data = await createAnnouncement(values)
   };
 
   const getButtonClass = (buttonView: ViewType) => {
@@ -112,74 +65,67 @@ export default function AllAnnouncements() {
       : "role_button";
   };
 
-  const handleSearchDelete = () => {
-    const query = searchQueryDelete.toLowerCase();
-    const results = blogs.filter(
-      (blog) =>
-        blog.title.toLowerCase().includes(query) ||
-        blog.description.toLowerCase().includes(query) ||
-        blog.date.includes(query)
-    );
-    setFilteredBlogsToDelete(results);
+  const handleSearchDelete = async () => {
+    console.log(searchQueryDelete);
+    try {
+     const response = await searchBlog(searchQueryDelete, "GENERAL");
+     console.log(response);
+     setFilteredBlogsToDelete(response);
+   } catch (error) {
+     console.error('Error fetching slots:', error);
+   }
+     setSearchQueryDelete("");
   };
 
-  const handleDelete = (blogToDelete: Blog) => {
-    const updatedBlogs = blogs.filter((blog) => blog !== blogToDelete);
-    setBlogs(updatedBlogs);
-    setFilteredBlogsToDelete(
-      updatedBlogs.filter(
-        (blog) =>
-          blog.title.toLowerCase().includes(searchQueryDelete.toLowerCase()) ||
-          blog.description
-            .toLowerCase()
-            .includes(searchQueryDelete.toLowerCase()) ||
-          blog.date.includes(searchQueryDelete)
-      )
-    );
-    setCurrentBlogForDelete(null);
+  const handleDelete = async (id: string) => {
+    await deleteNotification(id);
+    setFilteredBlogsToDelete([])
   };
 
   const handleAddBlog = (): void => {
-    if (!title || !description || !date) {
+    if (!title || !description || !createdAt) {
       alert("All fields are required to add a blog.");
       return;
     }
 
     const newBlog: BlogPost = {
-      id: Date.now().toString(),
+      id: JSON.stringify(Date.now()),
       title,
       description,
-      date,
+      createdAt,
     };
 
     setBlogPosts([...blogPosts, newBlog]);
     setTitle("");
     setdescription("");
-    setDate("");
+    setcreatedAt("");
   };
 
-  const handleSearchEdit = () => {
-    const query = searchQueryEdit.toLowerCase();
-    const results = blogs.filter(
-      (blog) =>
-        blog.title.toLowerCase().includes(query) ||
-        blog.description.toLowerCase().includes(query) ||
-        blog.date.includes(query)
-    );
-    setFilteredBlogs(results);
-  };
+  const handleSearchEdit = async () => {
+    console.log(searchQueryEdit);
+    try {
+     const response = await searchBlog(searchQueryEdit, "GENERAL");
+     console.log(response);
+     setFilteredBlogs(response);
+   } catch (error) {
+     console.error('Error fetching slots:', error);
+   }
+     setSearchQueryEdit("");
+   };
+ 
 
   const handleEdit = (index: number) => {
     setEditIndex(index);
     setEditBlog(filteredBlogs[index]);
   };
 
-  const handleUpdate = () => {
+  const handleUpcreatedAt = async () => {
     if (editBlog !== null && editIndex !== null) {
       const updatedBlogs = blogs.map((blog, index) =>
         index === editIndex ? editBlog : blog
       );
       setBlogs(updatedBlogs);
+      console.log(updatedBlogs)
       setFilteredBlogs(
         updatedBlogs.filter(
           (blog) =>
@@ -187,9 +133,10 @@ export default function AllAnnouncements() {
             blog.description
               .toLowerCase()
               .includes(searchQueryEdit.toLowerCase()) ||
-            blog.date.includes(searchQueryEdit)
+            blog.createdAt.includes(searchQueryEdit)
         )
       );
+     await updateNotification(updatedBlogs[0].id, updatedBlogs[0]);
       setEditIndex(null);
       setEditBlog(null);
     }
@@ -209,8 +156,8 @@ export default function AllAnnouncements() {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center bg-[#00171A] text-white">
-      <div className="md:space-x-2 grid md:flex gap-2 mb-4">
+    <div className="w-full flex flex-col items-center justify-center  bg-[#00171A] text-white p-4">
+      <div className="space-x-2 mb-4">
         <button
           onClick={() => setView("add")}
           className={getButtonClass("add")}
@@ -231,13 +178,9 @@ export default function AllAnnouncements() {
         </button>
       </div>
       {view === "add" && (
-        <div className="px-4 sm:px-0">
-          {" "}
-          {/* Add padding on mobile */}
+        <div className="">
           <div className="flex justify-center items-center mt-4">
-            <div className="flex flex-col space-y-2 w-[350px]">
-              {" "}
-              {/* Ensure full width on mobile */}
+            <div className="flex flex-col space-y-2">
               <input
                 type="text"
                 placeholder="Add Blog Title Here"
@@ -257,16 +200,16 @@ export default function AllAnnouncements() {
                 }
               />
               <input
-                type="date"
+                type="createdAt"
                 className="p-3 w-full sm:w-[400px] bg-[#00171A] text-white placeholder-gray-400 rounded-full border border-gray-800 focus:ring-1 focus:ring-[#A4E320] focus:outline-none"
-                value={date}
+                value={createdAt}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setDate(e.target.value)
+                  setcreatedAt(e.target.value)
                 }
               />
               <button
                 onClick={handleAddBlog}
-                className="bg-[#A4E320] sm:w-[400px] px-4 py-2 rounded-full mt-2"
+                className="bg-[#A4E320] px-4 py-2 rounded-full mt-2"
               >
                 Add Now
               </button>
@@ -290,24 +233,21 @@ export default function AllAnnouncements() {
                 >
                   ➔
                 </button>
+
                 <h2 className="text-xl text-white font-semibold">
                   {blog.title}
                 </h2>
                 <p className="text-gray-400">{blog.description}</p>
-                <p className="text-[#A4E320]">{blog.date}</p>
+                <p className="text-[#A4E320]">{blog.createdAt}</p>
               </div>
             ))}
           </div>
         </div>
       )}
       {view === "delete" && (
-        <div className="px-4 sm:px-0">
-          {" "}
-          {/* Add padding on mobile */}
+        <div>
           <div className="flex justify-center items-center mt-4">
-            <div className="flex items-center space-x-2 w-full sm:w-auto">
-              {" "}
-              {/* Ensure full width on mobile */}
+            <div className="flex items-center space-x-2">
               <input
                 type="text"
                 placeholder="Search Blog to Delete"
@@ -326,17 +266,17 @@ export default function AllAnnouncements() {
             </div>
           </div>
           <div className="mt-4">
-            {filteredBlogsToDelete.length > 0
+            { filteredBlogsToDelete.length > 0
               ? filteredBlogsToDelete.map((blog, index) => (
                   <div key={index} className="bg-[#001F22] p-4 rounded mt-2">
                     <h2 className="text-xl font-bold text-white">
                       {blog.title}
                     </h2>
                     <p className="text-gray-400">{blog.description}</p>
-                    <p className="text-gray-500">{blog.date}</p>
+                    <p className="text-gray-500">{blog.createdAt}</p>
                     <div className="mt-2">
                       <button
-                        onClick={() => handleDelete(blog)}
+                        onClick={() => handleDelete(blog.id)}
                         className="bg-[#EC183E] px-8 py-2 rounded-full"
                       >
                         Delete
@@ -353,13 +293,9 @@ export default function AllAnnouncements() {
         </div>
       )}
       {view === "edit" && (
-        <div className="px-4 sm:px-0">
-          {" "}
-          {/* Add padding on mobile */}
+        <div>
           <div className="flex justify-center items-center mt-4">
-            <div className="flex items-center space-x-2 w-full sm:w-auto">
-              {" "}
-              {/* Ensure full width on mobile */}
+            <div className="flex items-center space-x-2">
               <input
                 type="text"
                 placeholder="Search Blog to Edit"
@@ -402,16 +338,16 @@ export default function AllAnnouncements() {
                         />
                         <input
                           type="text"
-                          name="date"
-                          value={editBlog?.date}
+                          name="createdAt"
+                          value={editBlog?.createdAt}
                           onChange={handleChange}
                           className="p-2 w-full bg-gray-800 text-white rounded mt-2"
                         />
                         <button
-                          onClick={handleUpdate}
+                          onClick={handleUpcreatedAt}
                           className="bg-[#A4E320] px-4 py-2 rounded-full mt-2"
                         >
-                          Update
+                          update
                         </button>
                       </div>
                     ) : (
@@ -420,7 +356,7 @@ export default function AllAnnouncements() {
                           {blog.title}
                         </h2>
                         <p className="text-gray-400">{blog.description}</p>
-                        <p className="text-gray-500">{blog.date}</p>
+                        <p className="text-gray-500">{blog.createdAt}</p>
                         <div className="mt-2">
                           <button
                             onClick={() => handleEdit(index)}

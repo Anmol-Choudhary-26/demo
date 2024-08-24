@@ -2,127 +2,13 @@ import React, { useState } from "react";
 import ReportedUserCard from "./ReportedUserCard";
 
 const users = [
-  {
-    id: "1",
-    name: "Mithun Gupta",
-    profileImage: "/avatar.svg",
-    reason:
-      "Good and profitable venture from Healthcare and medicine sector. Serial entrepreneur with a good foothold in Healthcare sector businesses",
-    reportedFor: "Nobo Gupta",
-    userType: "franchise",
-  },
-  {
-    id: "2",
-    name: "John Doe",
-    profileImage: "/avatar.svg",
-    reason: "Involved in fraudulent activities.",
-    reportedFor: "Jane Smith",
-    userType: "franchise",
-  },
-  {
-    id: "3",
-    name: "Alice Johnson",
-    profileImage: "/avatar.svg",
-    reason: "Spreading misinformation on the platform.",
-    reportedFor: "Clark Kent",
-    userType: "franchise",
-  },
-  {
-    id: "4",
-    name: "Bob Brown",
-    profileImage: "/avatar.svg",
-    reason: "Violating community guidelines.",
-    reportedFor: "Lois Lane",
-    userType: "franchise",
-  },
-  {
-    id: "5",
-    name: "Charlie White",
-    profileImage: "/avatar.svg",
-    reason: "Using offensive language.",
-    reportedFor: "Bruce Wayne",
-    userType: "franchise",
-  },
-  {
-    id: "6",
-    name: "David Green",
-    profileImage: "/avatar.svg",
-    reason: "Impersonation of another user.",
-    reportedFor: "Oliver Queen",
-    userType: "franchise",
-  },
-  {
-    id: "7",
-    name: "Eva Black",
-    profileImage: "/avatar.svg",
-    reason: "Scamming users.",
-    reportedFor: "Barry Allen",
-    userType: "franchise",
-  },
-  {
-    id: "8",
-    name: "Frank Gray",
-    profileImage: "/avatar.svg",
-    reason: "Harassment and bullying.",
-    reportedFor: "Hal Jordan",
-    userType: "franchise",
-  },
-  {
-    id: "9",
-    name: "Grace Blue",
-    profileImage: "/avatar.svg",
-    reason: "Spreading false news.",
-    reportedFor: "Kara Danvers",
-    userType: "franchise",
-  },
-  {
-    id: "10",
-    name: "Hank Brown",
-    profileImage: "/avatar.svg",
-    reason: "Inappropriate content.",
-    reportedFor: "Carter Hall",
-    userType: "franchise",
-  },
-  {
-    id: "11",
-    name: "Ivy Green",
-    profileImage: "/avatar.svg",
-    reason: "Spam activities.",
-    reportedFor: "Diana Prince",
-    userType: "franchise",
-  },
-  {
-    id: "12",
-    name: "Jack White",
-    profileImage: "/avatar.svg",
-    reason: "Fake profile.",
-    reportedFor: "Arthur Curry",
-    userType: "franchise",
-  },
-  {
-    id: "13",
-    name: "Karen Black",
-    profileImage: "/avatar.svg",
-    reason: "Multiple account usage.",
-    reportedFor: "Victor Stone",
-    userType: "franchise",
-  },
-  {
-    id: "14",
-    name: "Larry Gray",
-    profileImage: "/avatar.svg",
-    reason: "Hate speech.",
-    reportedFor: "Bruce Banner",
-    userType: "franchise",
-  },
-  {
-    id: "15",
-    name: "Mona White",
-    profileImage: "/avatar.svg",
-    reason: "Sharing explicit content.",
-    reportedFor: "Natasha Romanoff",
-    userType: "franchise",
-  },
+ {
+  id: "123",
+  businessName: "anmol",
+  profileImage: "images",
+  reason: "reason",
+  reporterName: "Kartik"
+ }
 ];
 
 const itemsPerPage = 12;
@@ -132,7 +18,7 @@ const ManageFranchiseReport = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredUsers = users.filter((user) =>
-    [user.name, user.reason, user.reportedFor].some((field) =>
+    [user.businessName, user.reason, user.reporterName].some((field) =>
       field.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );

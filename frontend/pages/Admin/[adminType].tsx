@@ -10,6 +10,7 @@ import ManageReports from "@/components/Admin/ManageReports";
 import AdminDashboard from "@/components/Admin/Dashboard/AdminDashboard";
 import ManageAdmins from "@/components/Admin/Dashboard/ManageAdmins";
 import PrivacyAndPolicy from "@/components/Common/PrivacyAndPolicy";
+import AdminLogin from "@/components/Admin/AdminLogin";
 
 export default function BusinessForm() {
   const router = useRouter();
@@ -19,6 +20,8 @@ export default function BusinessForm() {
     switch (adminType) {
       case "homepage":
         return <AdminDashboard />;
+      case "login":
+        return <AdminLogin />;
       case "manage-admins":
         return <ManageAdmins />;
       case "manage-industry":

@@ -19,8 +19,6 @@ import {
 import {
   UserCircleIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
   LifebuoyIcon,
   PowerIcon,
   ChatBubbleLeftIcon,
@@ -211,7 +209,7 @@ export default function BusinessNavbar() {
       ) : (
         <Navbar
           placeholder=""
-          className={`font-manrope max-w-none px-4 py-2 z-[1000] border-none shadow-none rounded-none backdrop-blur-none bg-opacity-100 ${
+          className={`font-manrope sticky top-0 max-w-none px-4 py-2 border-none shadow-none rounded-none backdrop-blur-none bg-white dark:bg-[#00171A] bg-opacity-100 z-10 ${
             theme === "dark"
               ? "bg-[#00171A] text-white"
               : "bg-[#ffffff] text-black"

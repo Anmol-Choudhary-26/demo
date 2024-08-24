@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Investor } from "@/types";
-import { investorsData } from "@/constants";
 import Modal from "@/components/Admin/Model";
+import { delinvestor, updateinvestor, getinvestor } from "@/hooks/useInvestor";
 
 const industries = [
   "Advertising",
@@ -33,13 +33,15 @@ const NewInvestorsAllowence = () => {
   });
 
   useEffect(() => {
+    const fn = async () => {
     if (id) {
-      const selectedInvestor = investorsData.find(
-        (b: { id: string | string[] }) => b.id === id
-      );
-      setInvestor(selectedInvestor || null);
+      const selectedBusiness = await getinvestor(id)
+      console.log(selectedBusiness)
+      setInvestor(selectedBusiness);
     }
-  }, [id]);
+  }
+  fn()
+  }, []);
 
   const handleViewDocument = () => {
     setModal({
@@ -52,20 +54,12 @@ const NewInvestorsAllowence = () => {
   };
 
   const handleApprove = () => {
-    setModal({
-      show: true,
-      title: "Approve",
-      content: "The business has been approved.",
-    });
-  };
-
-  const handleBanAccount = () => {
-    setModal({
-      show: true,
-      title: "Ban Account",
-      content: "The account has been banned.",
-    });
-  };
+    updateinvestor(id)
+    };
+  
+    const handleBanAccount = () => {
+       delinvestor(id);
+    };
 
   const handleSuggestChanges = () => {
     setModal({
@@ -131,10 +125,7 @@ const NewInvestorsAllowence = () => {
           <h4 className="text-md font-semibold">Location Interests:</h4>
           <div className="grid grid-cols-2 gap-2 sm:flex space-x-2">
             {location.map((place, index) => (
-              <p
-                key={index}
-                className="bg-[#C3EC6C] text-black px-4 py-2 rounded-full text-center"
-              >
+              <p  key= {index} className="bg-[#C3EC6C] text-black px-4 py-2 rounded-full text-center">
                 {place}
               </p>
             ))}

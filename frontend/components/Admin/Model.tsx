@@ -85,7 +85,7 @@ const Modal: React.FC<ModalProps> = ({
                   <input
                     type="text"
                     name="location"
-                    value={(formData as Business).location}
+                    value={(formData as Business).district}
                     onChange={handleChange}
                     placeholder="Location"
                     className="w-full p-2 border rounded-md mb-2"

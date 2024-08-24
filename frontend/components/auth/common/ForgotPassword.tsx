@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import PrimaryButton from "@/components/Common/PrimaryButton";
 import { useTheme } from "@/context/ThemeContext"; // Import the ThemeContext
+import { resetPassword } from "@/hooks/useLogin";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
@@ -12,8 +13,9 @@ const ForgotPasswordForm = () => {
     event.preventDefault();
     // Forgot password logic here
     console.log(email);
+    const data = await resetPassword(email)
+  console.log(data);
     // Optionally navigate to a different page, such as a password reset confirmation page
-    router.push("/auth/reset-password");
   };
 
   const handleResend = () => {

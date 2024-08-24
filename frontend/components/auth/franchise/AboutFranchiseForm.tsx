@@ -90,6 +90,7 @@ export default function AboutFranchiseForm() {
             </label>
             <input
               type="date"
+              required
               id="establishedDate"
               name="establishedDate"
               className={`w-full p-3 ${
@@ -111,6 +112,7 @@ export default function AboutFranchiseForm() {
             </label>
             <select
               id="industry"
+              required
               name="industry"
               className={`w-full p-3 ${
                 theme === "dark"
@@ -133,6 +135,7 @@ export default function AboutFranchiseForm() {
             </label>
             <input
               type="text"
+              required
               id="address"
               name="address"
               className={`w-full p-3 ${
@@ -154,6 +157,7 @@ export default function AboutFranchiseForm() {
             </label>
             <input
               type="text"
+              required
               id="state"
               name="state"
               className={`w-full p-3 ${
@@ -175,6 +179,7 @@ export default function AboutFranchiseForm() {
             </label>
             <input
               type="text"
+              required
               id="district"
               name="district"
               className={`w-full p-3 ${
@@ -196,6 +201,7 @@ export default function AboutFranchiseForm() {
             </label>
             <input
               type="number"
+              required
               id="Pincode"
               name="Pincode"
               className={`w-full p-3 ${
@@ -217,6 +223,7 @@ export default function AboutFranchiseForm() {
             </label>
             <input
               type="text"
+              required
               id="name"
               name="name"
               className={`w-full p-3 ${
@@ -238,6 +245,7 @@ export default function AboutFranchiseForm() {
             </label>
             <input
               type="number"
+              required
               id="numberOfEmployees"
               name="numberOfEmployees"
               className={`w-full p-3 ${
@@ -259,6 +267,7 @@ export default function AboutFranchiseForm() {
             </label>
             <select
               id="businessType"
+              required
               name="businessType"
               className={`w-full p-3 ${
                 theme === "dark"
@@ -291,6 +300,7 @@ export default function AboutFranchiseForm() {
               </span>
               <input
                 type="tel"
+                required
                 id="phoneNumber"
                 name="phoneNumber"
                 className={`w-full p-3 ${

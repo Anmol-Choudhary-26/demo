@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FiltersProps } from "@/types"; // assuming you have a file for type definitions
+import { FiltersProps } from "@/types";
 import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Button, Typography } from "@material-tailwind/react";
-import MultiRangeSlider from "@/components/Common/MultiRangeSlider";
 import { useTheme } from "@/context/ThemeContext"; // Import the ThemeContext
 
 const locations = [
@@ -21,7 +20,9 @@ const sectors = [
   { name: "Foods and Beverages", subSectors: [] },
 ];
 
-const InvestorsType = ["Sole investor", "Partner", "Stakeholders", "Ideas"];
+  
+  
+const InvestorsType = ["SOLEINVESTOR", "PARTNER", "STAKEHOLDER"];
 
 interface FilterProps {
   isFilterVisible: boolean;
@@ -64,12 +65,13 @@ export function FilterSearchForInvestors({
       yearRange,
     });
   };
-
-  const [style, setStyle] = useState({}); // For dynamic styling based on scroll
-
+  
+  const [style, setStyle] = useState({});
+  
   const [minInvestment, setMinInvestment] = useState<number>(0);
   const [maxInvestment, setMaxInvestment] = useState<number>(200000);
-
+  
+  console.log(investorsType, selectedLocations, selectedSectors, yearRange, minInvestment, maxInvestment)
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
     setMinInvestment(value);
@@ -85,7 +87,7 @@ export function FilterSearchForInvestors({
       const position = window.scrollY;
 
       const updatedStyle = {
-        marginTop: position < 100 ? `${position + 80}px` : "20px", // Adjust '100px' based on your needs
+        marginTop: position < 100 ? `${position + 80}px` : "20px",
       };
       setStyle(updatedStyle);
     };
@@ -97,12 +99,12 @@ export function FilterSearchForInvestors({
     };
   }, []);
 
-  const toggleFilter = () => setIsFilterVisible(!isFilterVisible); // Corrected usage
+  const toggleFilter = () => setIsFilterVisible(!isFilterVisible);
 
   const currentYear = new Date().getFullYear();
   const startYearOptions = Array.from(
     { length: currentYear - 2000 + 1 },
-    (_, i) => 2000 + i
+    (_, i) => 2000 + i + 2
   );
 
   const handleYearChange = (
@@ -148,12 +150,12 @@ export function FilterSearchForInvestors({
       location: "",
       sector: "",
       searchTerms: [],
-      legalEntity: [], // Add default values for optional properties
+      legalEntity: [],
       minInvestment: 0,
       maxInvestment: Infinity,
       yearRange: { startYear: null, endYear: null },
     });
-    // Reset selected locations and sectors
+    
     setInvestorsType([]);
     setSelectedLocations([]);
     setSelectedSectors([]);
@@ -180,7 +182,7 @@ export function FilterSearchForInvestors({
         subSector.toLowerCase().includes(sectorSearchQuery.toLowerCase())
       )
   );
-
+  console.log('filters')
   return (
     <>
       {isFilterVisible && (

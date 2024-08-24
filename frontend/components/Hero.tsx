@@ -73,11 +73,11 @@ export default function Hero() {
           <p
             className={`hidden sm:block justify-center text-center pt-32 sm:pt-48 px-4 text-white tracking-wider`}
           >
-            Biwi is a revolutionary marketplace designed to connect ambitious
-            founders with the right investors to bring their dreams to life.{" "}
-            <br className="hidden lg:block" /> We understand the challenges
-            faced by both founders seeking funding and investors searching for
-            promising ventures. Our
+            PehlaStake is a revolutionary marketplace designed to connect
+            ambitious founders with the right investors to bring their dreams to
+            life. <br className="hidden lg:block" /> We understand the
+            challenges faced by both founders seeking funding and investors
+            searching for promising ventures. Our
             <br className="hidden lg:block" /> platform provides a seamless and
             efficient solution to overcome these hurdles and{" "}
             <br className="hidden lg:block" /> foster mutually beneficial

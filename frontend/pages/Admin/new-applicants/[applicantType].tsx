@@ -5,8 +5,9 @@ import NewInvestorsAllowence from "@/components/Admin/NewApplicants/NewInvestors
 export default function BusinessForm() {
   const router = useRouter();
   const { applicantType } = router.query;
-
+  
   const renderForm = () => {
+    
     switch (applicantType) {
       case "business-applicant":
         return <NewBusinessAllowance />;

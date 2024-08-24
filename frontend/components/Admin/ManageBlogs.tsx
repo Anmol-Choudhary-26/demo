@@ -103,8 +103,8 @@ export default function ManageBlogs() {
     if (!file || !title || !content || !date) {
       alert("All fields are required to add a blog.");
       return;
-    }
-    setTitle(title);
+    }  
+     setTitle(title);
     setContent(content);
     setDate(date);
     setBlogPosts([
@@ -112,9 +112,10 @@ export default function ManageBlogs() {
         id: Date.now().toString(),
         title: title,
         description: content,
-        date: "s",
+        createdAt: "s",
       },
     ]);
+
   };
 
   const handleSearchEdit = async () => {

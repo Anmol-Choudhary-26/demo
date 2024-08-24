@@ -7,7 +7,7 @@ export async function createInvestor(corporateProfile: any, bankStatement: any){
      {
         userId :userID,
         corporateProfile: "Corporate Profile",
-        BusinessProof: "BusinessProofURl",
+        investorProof: "investorProofURl",
         investmentRangeStart: 0,
         investmentRangeEnd: 1000000000   
 
@@ -43,3 +43,66 @@ export async function createInvestor2(values: any){
   setDataToLocalStorage("InvestorData" , JSON.stringify(data))
   return data
 } 
+
+export async function verifiedinvestor() {
+ 
+  const data = await axios.get('http://localhost:8000/investor/nonverified')
+  return data.data
+ 
+}
+
+
+export async function getinvestor(id:any){
+  console.log(id)
+  const data = await axios.get('http://localhost:8000/investor/one',
+   { params: {
+      id: id,
+    },
+  }
+  )
+  console.log(data.data)
+  return data.data  
+}
+
+export async function delinvestor(id:any){
+  
+    const data = await axios.put('http://localhost:8000/investor',{
+      isBanned: true,
+    
+    },
+    { params: {
+      id: id,
+    }})
+  
+    return data.data
+  }
+
+
+export async function updateinvestor(id:any){
+  const data = await axios.put('http://localhost:8000/investor',{
+    isVerified: true,
+  
+  },
+  { params: {
+    id: id,
+  }})
+
+  return data.data
+}
+
+export async function hideinvestor(id:any){
+  const data = await axios.put('http://localhost:8000/investor',{
+    isVerified: false,
+  
+  },
+  { params: {
+    id: id,
+  }})
+
+  return data.data
+}
+
+export async function getAllInvestors(){
+  const data = await axios.get('http://localhost:8000/investor')
+  return data.data
+}

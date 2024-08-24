@@ -6,8 +6,6 @@ import {
   Navbar,
   Collapse,
   Typography,
-  Button,
-  IconButton,
   List,
   ListItem,
   Menu,
@@ -236,7 +234,7 @@ export function NavbarTop() {
         <Sidebar />
       ) : (
         <Navbar
-          className="font-manrope max-w-none px-4 py-2 border-none shadow-none rounded-none backdrop-blur-none bg-white dark:bg-[#00171A] bg-opacity-100"
+          className="font-manrope sticky top-0 max-w-none px-4 py-2 border-none shadow-none rounded-none backdrop-blur-none bg-white dark:bg-[#00171A] bg-opacity-100 z-10"
           placeholder={undefined}
         >
           <div className="flex items-center justify-between">
