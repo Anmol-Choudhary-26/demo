@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 dotenv.config();
 
-router.post("/adminlogin", async (req, res) => {
+router.post("/", async (req, res) => {
   const { phone, password } = req.body;
 
   try {
@@ -28,13 +28,10 @@ router.post("/adminlogin", async (req, res) => {
       data: admin,
       role: admin.admin,
     };
-    res.cookie(
-      jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {
-        expiresIn: "120m",
-      })
-    );
-
-    res.status(200).json({ message: "Admin Login successful" });
+    const accessToken =  jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {
+      expiresIn: "120m",
+    })
+    res.status(200).json({ message: "Admin Login successful", accessToken });
   } catch (error) {
     res.status(500).json({ error: "Something went wrong" });
   }

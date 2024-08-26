@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const router = express.Router();
 const superAdminAuth = require("../middleware/verify.js").VerifySuperAdmin
 // Create Admin
-router.post("/", superAdminAuth, async (req, res) => {
+router.post("/", async (req, res) => {
   const { email, password, phoneNumber } = req.body;
 
   try {

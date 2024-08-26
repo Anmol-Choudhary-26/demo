@@ -6,29 +6,29 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 // Create Industry
-router.post("/", verifyRole, async (req, res) => {
-  const { name } = req.body;
-
+router.post("/", async (req, res) => {
+  const {name, description} = req.body
+  console.log(req.body);
   try {
     const newIndustry = await prisma.industry.create({
       data: {
-        name,
+       name, description
       },
     });
 
     res.status(201).json(newIndustry);
   } catch (error) {
-    res.status(500).json({ error: "Something went wrong" });
+    console.log(error)
+    res.status(500).json({ error: error });
   }
 });
 
 // Read Industry
-router.get("/:id", verifyRole, async (req, res) => {
-  const { id } = req.params;
+router.get("/", async (req, res) => {
 
   try {
     const industry = await prisma.industry.findUnique({
-      where: { id: id },
+      where: { id: req.params.id },
     });
 
     if (industry) {
@@ -40,7 +40,7 @@ router.get("/:id", verifyRole, async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
-
+``
 router.get("/popular", async (req, res) => {
   try {
     const topIndustries = await prisma.industry.findMany({
@@ -56,16 +56,33 @@ router.get("/popular", async (req, res) => {
   }
 });
 
-// Update Industry
-router.put("/:id", verifyRole, async (req, res) => {
-  const { id } = req.params;
-  const { name } = req.body;
+router.get("/search", async (req, res) => {
+  const Recipe = await prisma.industry.findMany({
+   
+   where:{
+    OR: [
+ {name:{contains:req.query.search, mode: "insensitive"}  },
+ {description:{contains:req.query.search, mode: "insensitive"}  }
+    
+    ],
+    
+      notiType: req.query.type
+},
+  }
+  )
+  res.status(200).json( Recipe )
+})
 
+
+// Update Industry
+router.put("/",  async (req, res) => {
+  const { name, description } = req.body;
   try {
     const updatedIndustry = await prisma.industry.update({
-      where: { id: id },
+      where: { id: req.params.id },
       data: {
         name,
+        description
       },
     });
 
@@ -76,12 +93,11 @@ router.put("/:id", verifyRole, async (req, res) => {
 });
 
 // Delete Industry
-router.delete("/:id", verifyRole, async (req, res) => {
-  const { id } = req.params;
+router.delete("/", verifyRole, async (req, res) => {
 
   try {
     const deletedIndustry = await prisma.industry.delete({
-      where: { id: Number(id) },
+      where: { id: req.params.id },
     });
 
     res.status(200).json(deletedIndustry);

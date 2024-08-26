@@ -44,19 +44,22 @@ enum InvestorPreference {
 }
 
 model User {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  email       String
-  phoneNumber String
-  FullName    String
-  Password    String
-  shortBio    String?
-  Address     String?
-  IDCard      String?
-  userRole    Role?    @default(null)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  block      Boolean  @default(false)
-  report     Report[]
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  email             String
+  phoneNumber       String
+  FullName          String
+  Password          String
+  shortBio          String?
+  Address           String?
+  IDCard            String?
+  userRole          Role?             @default(null)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  block             Boolean           @default(false)
+  businessReported  BusinessReport[]
+  investorReported  InvestorReport[]
+  IdeaReported      IdeaReport[]
+  FranchiseReported FranchiseReport[]
 }
 
 model Investor {
@@ -65,29 +68,42 @@ model Investor {
   Businesses           Investment[]
   Franchises           FranchiseInvestment[] // Changed to Investment
   corporateProfile     String
-  BusinessProof        String
+  investorProof        String
+  shortBio    String?
+  Address     String?
   isVerified           Boolean               @default(false)
-  industry             industry[]
-  locations            location[]
+  industry             String[]
+  locations            String[]
   investmentRangeStart Int
   investmentRangeEnd   Int
+  State                String
+  district             String
+  Pincode              Int
+  isBanned             Boolean               @default(false)
+  shortBio             String?
+  Address              String?
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
   chatRoom             chatRoom[]
   msg                  msg[]
+  reports              InvestorReport[]
 }
 
 model Business {
   id                              String             @id @default(auto()) @map("_id") @db.ObjectId
   userId                          String             @map("user_id") @db.ObjectId
   isVerified                      Boolean            @default(false)
-  establishedDate                 String 
+  establishedDate                 String
   phone                           String
   industry                        String
   name                            String
+    shortBio    String?
+  Address     String?
   address                         String
   numberOfEmployees               Int
   businessLegalEntityType         EntityType
+  shortBio                        String?
+  Address                         String?
   businessPhoneNumber             String
   productInfo                     String
   businessInfo                    String
@@ -106,16 +122,17 @@ model Business {
   State                           String
   district                        String
   Pincode                         Int
-  locations                       location[] 
-  Interests                       industry[]
+  locations                       String[] 
+  Interests                       String[]
   InvestmentRangeStart            Int
   InvestmentRangeEnd              Int
-  score                           Int @default(0)
+  score                           Int                @default(0)
   investments                     Investment[] // Changed to Investment
   createdAt                       DateTime           @default(now())
   updatedAt                       DateTime           @updatedAt
   chatRoom                        chatRoom[]
   msg                             msg[]
+  reports                         BusinessReport[]
 }
 
 model UpdateBusiness {
@@ -145,22 +162,26 @@ model UpdateBusiness {
 }
 
 model Franchise {
-  id                              String                @id @default(auto()) @map("_id") @db.ObjectId
-  userId                          String                @map("user_id") @db.ObjectId
-  name                            String
-  isVerified                      Boolean               @default(false)
-  phone        String
-  industry                        String
-  establishedDate                 String
-  productInfo                     String
-  FranchiseInfo                   String
-  facilityInfo                    String
-  address                         String
-  currentLoanInfo                 String
-  totalShareHolders               String
-  currentFundingInfo              String
-  currentMonthlySales      Int
-  latestReportedSales             Int
+  id                  String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId              String  @map("user_id") @db.ObjectId
+  name                String
+  isVerified          Boolean @default(false)
+  phone               String
+  industry            String
+  establishedDate     String
+  productInfo         String
+  FranchiseInfo       String
+  facilityInfo        String
+  shortBio            String?
+  Address             String?
+  address             String
+  currentLoanInfo     String
+  totalShareHolders   String
+  currentFundingInfo  String
+  currentMonthlySales Int
+  latestReportedSales Int
+  isBanned            Boolean @default(false)
+
   BusinessImage                   String
   BusinessDocument                String
   BusinessProof                   String
@@ -179,17 +200,21 @@ model Franchise {
   investments                     FranchiseInvestment[] // Changed to Investment
   createdAt                       DateTime              @default(now())
   updatedAt                       DateTime              @updatedAt
+  reports                         FranchiseReport[]
 }
 
 model Idea {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String   @map("user_id") @db.ObjectId
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String       @map("user_id") @db.ObjectId
   idea       String
-  isVerified Boolean  @default(false)
+  isVerified Boolean      @default(false)
   idProof    String
   adhaar     String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  shortBio   String?
+  Address    String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  reposts    IdeaReport[]
 }
 
 model Admin {
@@ -238,28 +263,20 @@ model FranchiseInvestment {
   @@unique([investorId, businessId])
 }
 
-
 model industry {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String
-  investorId  String   @map("investor_id") @db.ObjectId
-  investor    Investor @relation(fields: [investorId], references: [id])
-  businessId  String   @map("business_id") @db.ObjectId
-  business    Business @relation(fields: [businessId], references: [id])
-  score       Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  industryName String
+  description  String
+  score? Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model location {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+ 
+  pincode     String   @id @map("_id") 
   locationName String
   description  String
-  investorId   String   @map("investor_id") @db.ObjectId
-  investor     Investor @relation(fields: [investorId], references: [id])
-  businessId   String   @map("business_id") @db.ObjectId
-  business     Business @relation(fields: [businessId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -305,10 +322,48 @@ model msg {
   received   Boolean  @default(false)
 }
 
-model Report {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+model BusinessReport {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  reason       String
+  businessId   String   @db.ObjectId
+  business     Business @relation(fields: [businessId], references: [id])
+  businessName String
+  reporterName String
+  reporter     String   @db.ObjectId
+  reportedBy   User     @relation(fields: [reporter], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model InvestorReport {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   reason     String
-  userId     String     @db.ObjectId
-  user       User     @relation(fields: [userId], references: [id])
+  investorId String   @db.ObjectId
+  Investor   Investor @relation(fields: [investorId], references: [id])
+  reporter   String   @db.ObjectId
+  reportedBy User     @relation(fields: [reporter], references: [id])
   createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model FranchiseReport {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  reason      String
+  FranchiseId String    @db.ObjectId
+  Franchise   Franchise @relation(fields: [FranchiseId], references: [id])
+  reporter    String    @db.ObjectId
+  reportedBy  User      @relation(fields: [reporter], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model IdeaReport {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  reason     String
+  IdeaId     String   @db.ObjectId
+  Idea       Idea     @relation(fields: [IdeaId], references: [id])
+  reporter   String   @db.ObjectId
+  reportedBy User     @relation(fields: [reporter], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

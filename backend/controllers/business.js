@@ -7,7 +7,7 @@ const verifyRole = require("../middleware/verify").VerifyRole;
 const verify = require("../middleware/verify").Verify
 
 // Create a new business
-router.post("/",verify, async (req, res) => {
+router.post("/", async (req, res) => {
   console.log(req.body)
   
   try{
@@ -36,8 +36,68 @@ catch(error){
   res.status(500).json({ error: "Something went wrong" });
 }
 });
+
+router.get("/nonverified", async (req, res) => {
+  try{
+  const businesses = await prisma.business.findMany({
+    where: {
+      isVerified: false,
+    },
+  });
+  res.json(businesses);
+}
+catch(error){
+  res.status(500).json({ error: "Something went wrong" });
+}
+});
+
+router.get('/api/businesses/search', async (req, res) => {
+  try {
+    // Get the query parameters from the request
+    const {
+      name,
+      InvestorPreference,
+      businessLegalEntityType,
+      State,
+      district,
+      industry,
+      investmentRangeStart,
+      investmentRangeEnd,
+      yearRange
+    } = req.query;
+
+    // Build the query conditions based on the provided filters
+    const where = {
+      AND: [
+        {name: name },
+        { InvestorPreference: { some: InvestorPreference? InvestorPreference.split(',') : null } },
+        { businessLegalEntityType: { some: businessLegalEntityType? businessLegalEntityType.split(',') : null } },
+        { State: State || null },
+        { district: { some: district? district.split(',') : null } } ,
+        { industry: { some: industry? industry.split(',') : null } },
+        { investmentRangeStart: { lte: investmentRangeEnd || null } },
+        { investmentRangeEnd: { gte: investmentRangeStart || null } },
+        { establishedDateStart: { lte: yearRange.startYear || null } },
+        { establishedDateStart: { gte: yearRange.endYear || null } },
+      ],
+    };
+
+    // Fetch the businesses based on the query conditions
+    const businesses = await prisma.business.findMany({
+      where,
+    });
+
+    // Send the search results as a JSON response
+    res.json(businesses);
+  } catch (error) {
+    // Handle any errors that occur during the search process
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while searching for businesses.' });
+  }
+});
+
 // Get all businesses
-router.get("/", verifyRole, async (req, res) => {
+router.get("/", async (req, res) => {
   const businesses = await prisma.business.findMany();
   res.json(businesses);
 });
@@ -45,9 +105,10 @@ router.get("/", verifyRole, async (req, res) => {
 
 
 // Get a business by id
-router.get("/:id", verifyRole, async (req, res) => {
+router.get("/one", async (req, res) => {
+  console.log(req.query)
   const business = await prisma.business.findUnique({
-    where: { id: Number(req.params.id) },
+    where: { id: (req.query.id) },
   });
   res.json(business);
 });
@@ -117,18 +178,21 @@ router.post("/", verifyRole, async (req, res) => {
 });
 
 // Update a business by id for admin
-router.put("/:id", VerifyRole, async (req, res) => {
+router.put("/", async (req, res) => {
+    console.log(req.body,req.query.id)
   const business = await prisma.business.update({
-    where: { id: Number(req.params.id) },
     data: req.body,
+    where: { id: (req.query.id) },
   });
   res.json(business);
 });
 
+ 
 // Delete a business by id
-router.delete("/:id", verifyRole, async (req, res) => {
+router.delete("/", async (req, res) => {
+  console.log(req.query.id);
   await prisma.business.delete({
-    where: { id: Number(req.params.id) },
+    where: { id: req.query.id },
   });
   res.status(204).send();
 });

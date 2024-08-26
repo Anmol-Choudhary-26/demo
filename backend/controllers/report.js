@@ -3,15 +3,15 @@ const { PrismaClient } = require('@prisma/client');
 const verify = require('../middleware/verify').Verify
 const verifyRole = require('../middleware/verify').VerifyRole;
 const prisma = new PrismaClient();
-const router = express.Router();lofi 
+const router = express.Router();
 
 // Create a report
 router.post('/reports',verify, async (req, res) => {
-  const { userId, reason } = req.body;
+  const { reportedBy, userId, reason, userName } = req.body;
   const report = await prisma.report.create({
-    data: { userId, reason },
+    data: {reportedBy,  userId, reason, userName },
   });
-  res.json(report);
+  res.status(200).json(report);
 });
 
 // Get all reports

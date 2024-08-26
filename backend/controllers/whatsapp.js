@@ -1,6 +1,5 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
-const pusher = require('./pusher');
 const verify = require("../middleware/verify").Verify;
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -60,7 +59,6 @@ router.get('/chatroom/:id/messages',verify,  async (req, res) => {
 router.post('/chatroom/:id',verify,  async (req, res) => {
     const { id } = req.params;
     
-    pusher.trigger(id, 'new-message', req.body.text);
 
     try {
         const newMessage = await prisma.message.create({
