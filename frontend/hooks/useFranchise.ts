@@ -5,7 +5,14 @@ export async function createFranchise(values: any){
     const businessData1 = getDataFromLocalStorage('FranchiseDetails')
     const businessData2 = getDataFromLocalStorage('FranchiseDetails2')
     const businessData3 = getDataFromLocalStorage('FranchiseDetails3')
-   
+    let personalData = localStorage.getItem("personalDetails");
+    let bio = "";
+    let address = "";
+    if (personalData !== null) {
+      const Data = JSON.parse(personalData);
+      bio = Data.bio;
+      address = Data.address;
+    }
 
     const data1 = {
       TangibleIntangibleAssests: businessData3? JSON.parse(businessData3).assets: "",
@@ -30,9 +37,12 @@ export async function createFranchise(values: any){
       BusinessImage: "",
       BusinessDocument : "",
       BusinessProof: "",
+      shortBio: bio,
+      Address: address,
       InvestmentRangeStart : values.minval? values.minval : 0,
       InvestmentRangeEnd: values.maxval? values.maxval :10000,
       State: businessData1? JSON.parse(businessData1).state : "",
+      
       district: businessData1? JSON.parse(businessData1).district : "",
       Pincode : businessData1? JSON.parse(businessData1).Pincode : "",
       phone:"9882234285"

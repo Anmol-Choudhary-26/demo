@@ -5,6 +5,14 @@ export async function createBusiness(values: any){
     const businessData1 = getDataFromLocalStorage('businessDetails')
     const businessData2 = getDataFromLocalStorage('businessDetails2')
     const businessData3 = getDataFromLocalStorage('businessDetails3')
+    let personalData = localStorage.getItem("personalDetails");
+    let bio = "";
+    let address = "";
+    if (personalData !== null) {
+      const Data = JSON.parse(personalData);
+      bio = Data.bio;
+      address = Data.address;
+    }
 
 
     const data1 = {
@@ -30,6 +38,8 @@ export async function createBusiness(values: any){
       BusinessImage: "",
       BusinessDocument : "",
       BusinessProof: "",
+      shortBio: bio,
+      Address: address,
       InvestmentRangeStart : values.minval? values.minval : 0,
       InvestmentRangeEnd: values.maxval? values.maxval :10000,
       State: businessData1? JSON.parse(businessData1).state : "",
