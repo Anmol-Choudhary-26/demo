@@ -80,8 +80,6 @@ model Investor {
   district             String
   Pincode              Int
   isBanned             Boolean               @default(false)
-  shortBio             String?
-  Address              String?
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
   chatRoom             chatRoom[]
@@ -97,13 +95,10 @@ model Business {
   phone                           String
   industry                        String
   name                            String
-    shortBio    String?
+  shortBio    String?
   Address     String?
-  address                         String
   numberOfEmployees               Int
   businessLegalEntityType         EntityType
-  shortBio                        String?
-  Address                         String?
   businessPhoneNumber             String
   productInfo                     String
   businessInfo                    String
